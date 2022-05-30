@@ -1,4 +1,4 @@
-package ua.martishyn.app.controllers.user;
+package ua.martishyn.app.controllers.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        userService.register(userRegisterDto);
+        userService.registerUser(userRegisterDto);
         return "redirect:/index";
 
     }

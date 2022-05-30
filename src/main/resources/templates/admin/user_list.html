@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users List</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> Id </th>
+        <th> First Name </th>
+        <th> Surname </th>
+        <th> Email </th>
+        <th> Role </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${noUsers}">
+        <td colspan="2"> No Users Available </td>
+    </tr>
+    <tr th:each="user : ${userDtoList}">
+        <td><span th:text="${user.id}"> Id </span></td>
+        <td><span th:text="${user.firstName}"> Id </span></td>
+        <td><span th:text="${user.lastName}"> Id </span></td>
+        <td><span th:text="${user.email}"> Id </span></td>
+        <td><span th:text="${user.role}"> Id </span></td>
+        <td><ul>
+            <li>
+                <form th:method="GET" action="#" th:action="@{/admin/users/{id}/edit(id=${user.id})}">
+                    <button class="generic-btn success small action-button" type="submit" >Edit</button>
+                </form>
+            </li>
+            <li>
+                <form th:method="POST" action="#" th:action="@{/admin/users/delete/{id}(id=${user.id})}">
+                    <button class="genric-btn danger small action-button" type="submit" >Delete</button>
+                </form>
+            </li>
+        </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

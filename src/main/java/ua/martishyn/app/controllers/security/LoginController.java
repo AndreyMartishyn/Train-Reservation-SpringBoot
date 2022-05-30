@@ -1,4 +1,4 @@
-package ua.martishyn.app.controllers.user;
+package ua.martishyn.app.controllers.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

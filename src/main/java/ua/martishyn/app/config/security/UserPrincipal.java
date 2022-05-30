@@ -1,4 +1,4 @@
-package ua.martishyn.app.models;
+package ua.martishyn.app.config.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

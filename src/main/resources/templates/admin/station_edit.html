@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" th:action="@{/admin/stations/{id}/edit(id=${station.id})}" th:object="${station}" method="POST">
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control"  th:field="*{name}" placeholder="First Name" th:errorclass="is-invalid">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-user"></span>
+            </div>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control"  th:field="*{code}" placeholder="Last Name" th:errorclass="is-invalid">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-user"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <button type="submit" class="btn btn-primary btn-block">Update</button>
+    </div>
+</form>
+</body>
+</html>

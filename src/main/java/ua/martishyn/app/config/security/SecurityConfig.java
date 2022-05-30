@@ -1,4 +1,4 @@
-package ua.martishyn.app.config;
+package ua.martishyn.app.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -61,8 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .permitAll();
     }
-
-
 
     @Bean
     AuthenticationProvider  authenticationProvider() {
