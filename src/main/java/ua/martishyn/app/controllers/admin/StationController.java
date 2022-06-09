@@ -1,4 +1,4 @@
-package ua.martishyn.app.controllers;
+package ua.martishyn.app.controllers.admin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.martishyn.app.models.StationDTO;
-import ua.martishyn.app.models.UserDTO;
 import ua.martishyn.app.service.StationService;
 
 import javax.validation.Valid;
@@ -49,7 +48,7 @@ public class StationController {
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable("id") int id, Model model) {
         try {
-            StationDTO stationDTO = stationService.getUserDtoByEntityId(id);
+            StationDTO stationDTO = stationService.getStationDtoById(id);
             model.addAttribute("station", stationDTO);
         } catch (Exception e) {
             log.error("Station not found with id {}", id);

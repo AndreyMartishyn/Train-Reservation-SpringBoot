@@ -1,53 +1,62 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<div th:replace="fragments/head :: head"></div>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <form action="#" th:action="@{/admin/users/{id}/edit(id=${user.id})}" th:object="${user}" method="POST">
-    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-    </div>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control"  th:field="*{firstName}" placeholder="First Name" th:errorclass="is-invalid">
-        <div class="input-group-append">
-            <div class="input-group-text">
-                <span class="fas fa-user"></span>
-            </div>
+    <br>
+    <div class="row d-flex justify-content-center">
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
-    </div>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control"  th:field="*{lastName}" placeholder="Last Name" th:errorclass="is-invalid">
-        <div class="input-group-append">
-            <div class="input-group-text">
-                <span class="fas fa-user"></span>
-            </div>
-        </div>
-    </div>
-    <div class="input-group mb-3">
-        <input type="email" class="form-control" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid">
+        <td class="row">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name"
+                           th:errorclass="is-invalid">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name"
+                           th:errorclass="is-invalid">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" th:field="*{email}" placeholder="Email"
+                           th:errorclass="is-invalid">
 
-        <div class="input-group-append">
-            <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div th:class="form-select">
+                        <select th:field="*{role}">
+                            <option th:each="role : ${T(ua.martishyn.app.utils.Role).values()}"
+                                    th:value="${role}"
+                                    th:text="${role}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div align="center">
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary btn-block">Update</button>
+                </div>
+                </div>
             </div>
-        </div>
     </div>
-    <div class="input-group mb-3">
-        <div th:class="form-select">
-        <select th:field="*{role}">
-        <option th:each="role : ${T(ua.martishyn.app.utils.Role).values()}"
-                th:value="${role}"
-                th:text="${role}">
-        </option>
-    </select>
-    </div>
-    </div>
-    <div class="col-4">
-        <button type="submit" class="btn btn-primary btn-block">Update</button>
     </div>
 </form>
 </body>

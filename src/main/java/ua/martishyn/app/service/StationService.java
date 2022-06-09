@@ -35,10 +35,10 @@ public class StationService {
                 .collect(Collectors.toList());
     }
 
-    public StationDTO getUserDtoByEntityId(int id) throws Exception {
+    public StationDTO getStationDtoById(int id) {
         Optional<Station> stationFromDb = stationRepository.findStationById(id);
         if (!stationFromDb.isPresent()) {
-            throw new Exception("User not found with such id");
+            //TODO: HANDLE EXCEPTIONS
         }
         return convertToDto(stationFromDb.get());
     }

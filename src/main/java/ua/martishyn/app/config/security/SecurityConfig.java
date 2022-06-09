@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,9 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/about-us").permitAll()
+                .antMatchers("/booking").permitAll()
+                .antMatchers("/images/**").permitAll()
                 .antMatchers("/static/**").permitAll()
 
-                .antMatchers("customer/tickets/**").hasRole("CUSTOMER")
+                .antMatchers("user/booking/**").hasRole("CUSTOMER")
 
                 .antMatchers("admin/stations/**").hasRole("ADMIN")
                 .antMatchers("admin/routes/**").hasRole("ADMIN")

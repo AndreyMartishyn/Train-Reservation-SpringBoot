@@ -17,7 +17,7 @@
     </thead>
     <tbody>
     <tr th:if="${noStations}">
-        <td colspan="2"> No Users Available </td>
+        <td colspan="2"> No Stations Available </td>
     </tr>
     <tr th:each="station : ${stationsDto}">
         <td><span th:text="${station.id}"> Station Id </span></td>

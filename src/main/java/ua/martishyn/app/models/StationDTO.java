@@ -3,8 +3,9 @@ package ua.martishyn.app.models;
 import lombok.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
-@Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -21,4 +22,17 @@ public class StationDTO {
     @Pattern(regexp = "^[A-Z\\u0400-\\u04ff]{1,3}$",
             message = "Code should be only up to 3 capitals cyrillic/latin")
     private String code;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StationDTO that = (StationDTO) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

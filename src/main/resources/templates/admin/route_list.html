@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users List</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> Route Id </th>
+        <th> Train Id </th>
+        <th> Station Id </th>
+        <th> Arrival Date </th>
+        <th> Departure Date </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${noRoutePoints}">
+        <td colspan="2"> No Routes Available </td>
+    </tr>
+    <tr th:each="routePoint : ${routePointList}">
+        <td><span th:text="${routePoint.routeId}"> Route Id </span></td>
+        <td><span th:text="${routePoint.trainId}"> Train Id </span></td>
+        <td><span th:text="${routePoint.stationId}"> Station Id </span></td>
+        <td><span th:text="${routePoint.arrival}"> Arrival Date </span></td>
+        <td><span th:text="${routePoint.departure}"> Departure Date </span></td>
+        <td><ul>
+            <li>
+                <form th:method="GET" action="#" th:action="@{/admin/routes/edit}">
+                    <input type="hidden" th:value="${routePoint.routeId}" name="routeId">
+                    <input type="hidden" th:value="${routePoint.stationId}" name="stationId">
+                    <button class="generic-btn success small action-button" type="submit" >Edit</button>
+                </form>
+            </li>
+            <li>
+                <form th:method="GET" action="#" th:action="@{/admin/routes/delete}">
+                    <input type="hidden" th:value="${routePoint.routeId}" name="routeId">
+                    <input type="hidden" th:value="${routePoint.stationId}" name="stationId">
+                    <button class="generic-btn success small action-button" type="submit" >Delete</button>
+                </form>
+            </li>
+        </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
