@@ -37,9 +37,6 @@ public class StationService {
 
     public StationDTO getStationDtoById(int id) {
         Optional<Station> stationFromDb = stationRepository.findStationById(id);
-        if (!stationFromDb.isPresent()) {
-            //TODO: HANDLE EXCEPTIONS
-        }
         return convertToDto(stationFromDb.get());
     }
 

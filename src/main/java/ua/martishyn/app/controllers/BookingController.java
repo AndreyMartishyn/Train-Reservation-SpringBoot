@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.martishyn.app.models.PersonalRoute;
-import ua.martishyn.app.service.BookingService;
+import ua.martishyn.app.service.RouteFindHelper;
+import ua.martishyn.app.utils.constants.ControllerConstants;
 
 import java.util.List;
 
@@ -17,29 +18,29 @@ import java.util.List;
 @RequestMapping("/booking")
 @Slf4j
 public class BookingController {
-    private BookingService bookingService;
+    private final RouteFindHelper routeFindHelper;
 
     @Autowired
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
+    public BookingController(RouteFindHelper routeFindHelper) {
+        this.routeFindHelper = routeFindHelper;
     }
 
     @GetMapping
     public String findTickets(@RequestParam("stationFrom") int fromId,
                               @RequestParam("stationTo") int toId,
                               Model model,
-                                RedirectAttributes attr) {
-        if (bookingService.areStationsSame(fromId, toId)) {
+                              RedirectAttributes attr) {
+        if (routeFindHelper.areStationsSame(fromId, toId)) {
             attr.addFlashAttribute("sameStations", "Departure and Arrival Stations are same");
-            return "redirect:/index";
+            return ControllerConstants.INDEX_PAGE_REDIRECT;
         } else {
-            bookingService.makeBooking(fromId, toId);
-            List<PersonalRoute> suitableRoutes = bookingService.getSuitableRoutes();
+            routeFindHelper.makeBooking(fromId, toId);
+            List<PersonalRoute> suitableRoutes = routeFindHelper.getSuitableRoutes();
             if (!suitableRoutes.isEmpty()) {
                 log.info("Appropriate routes found. Size : {}", suitableRoutes.size());
                 model.addAttribute("suitableRoutes", suitableRoutes);
             }
         }
-        return "/index";
+        return ControllerConstants.INDEX_PAGE;
     }
 }

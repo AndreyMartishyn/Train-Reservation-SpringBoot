@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.martishyn.app.models.UserDTO;
 import ua.martishyn.app.service.UserService;
+import ua.martishyn.app.utils.constants.ControllerConstants;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,7 +32,7 @@ public class UserController {
         } else {
             model.addAttribute("userDtoList", dtoList);
         }
-        return "/admin/user_list";
+        return ControllerConstants.USER_LIST;
     }
 
     @GetMapping("/{id}/edit")
@@ -42,16 +43,16 @@ public class UserController {
         } catch (Exception e) {
             log.error("User not found with id {}", id);
             e.printStackTrace();
-            return "redirect:/admin/users";
+            return ControllerConstants.USER_REDIRECT;
         }
-        return "/admin/user_edit";
+        return ControllerConstants.USER_EDIT_PAGE;
     }
 
     @PostMapping("/{id}/edit")
     public String updateUser(@ModelAttribute("user") @Valid UserDTO userDTO,
-                             BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "/admin/user_edit";
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ControllerConstants.USER_EDIT_PAGE;
         }
         try {
             userService.updateUserFromDtoData(userDTO.getId(), userDTO);
@@ -59,18 +60,17 @@ public class UserController {
             log.error("User not updated with id {}", userDTO.getId());
             e.printStackTrace();
         }
-        return "redirect:/admin/users";
+        return ControllerConstants.USER_REDIRECT;
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteUserById(@PathVariable("id") int id){
+    public String deleteUserById(@PathVariable("id") int id) {
         try {
             userService.deleteUserById(id);
         } catch (Exception e) {
             log.error("User with id {} not deleted", id);
             e.printStackTrace();
-
         }
-        return "redirect:/admin/users";
+        return ControllerConstants.USER_REDIRECT;
     }
 }

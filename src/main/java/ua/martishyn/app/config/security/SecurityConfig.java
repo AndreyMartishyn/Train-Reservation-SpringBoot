@@ -7,7 +7,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +16,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String CUSTOMER_ROLE = "CUSTOMER";
 
     private final CustomUserService userService;
 
@@ -42,11 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/static/**").permitAll()
 
-                .antMatchers("user/booking/**").hasRole("CUSTOMER")
+                .antMatchers("user/booking/**").hasRole(CUSTOMER_ROLE)
 
-                .antMatchers("admin/stations/**").hasRole("ADMIN")
-                .antMatchers("admin/routes/**").hasRole("ADMIN")
-                .antMatchers("admin/users/**").hasRole("ADMIN")
+                .antMatchers("admin/stations/**").hasRole(ADMIN_ROLE)
+                .antMatchers("admin/routes/**").hasRole(ADMIN_ROLE)
+                .antMatchers("admin/users/**").hasRole(ADMIN_ROLE)
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -66,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    AuthenticationProvider  authenticationProvider() {
+    AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userService);
         authProvider.setPasswordEncoder(passwordEncoder());

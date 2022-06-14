@@ -1,21 +1,23 @@
 package ua.martishyn.app.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "train_model")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class TrainModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3277775474019366782L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "model")

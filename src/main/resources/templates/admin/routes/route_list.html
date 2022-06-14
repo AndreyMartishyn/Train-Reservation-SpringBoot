@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 1200px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <table class="table table-sm table-bordered align-middle mb-0 bg-white">
+                <thead>
+                <tr>
+                    <th> Route Id</th>
+                    <th> Train Id</th>
+                    <th> Departure Date</th>
+                    <th> Arrival Date</th>
+                    <th> Stations En-route</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${noRoutes}">
+                    <td colspan="5"> No Routes Available</td>
+                </tr>
+                <tr th:each="route: ${routeList}">
+                    <td><span th:text="${route.id}"> Route Id </span></td>
+                    <td><span th:text="${route.trainId}"> Train Id </span></td>
+                    <div th:if="${route.intermediateStations.size != 0}">
+                        <td><span th:text="${route.firstStation.departure}">Departure</span></td>
+                        <td><span th:text="${route.lastStation.arrival}">Arrival</span></td>
+                        <td>
+                            <form th:method="POST" th:action="@{/admin/routes/{routeId}/delete(routeId=${route.id})}">
+
+                                <button
+                                        class="btn btn-outline-danger btn-rounded"
+                                        type="submit">
+                                    <i class="fas fa-trash fa-lg"></i>
+                                </button>
+                            </form>
+                            <button
+                                    class="btn btn-success btn-rounded"
+                                    type="button"
+                                    data-mdb-toggle="collapse"
+                                    data-mdb-target="#collapseExample"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Show route-points
+                            </button>
+
+                            <!-- Collapsed content -->
+                            <div class="collapse mt-3" id="collapseExample">
+                                <table class="table table-sm table-bordered align-middle">
+                                    <thead>
+                                    <tr>
+                                        <th> Station id, name</th>
+                                        <th> Arrival Date</th>
+                                        <th> Departure Date</th>
+                                        <th> Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="routePoint: ${route.intermediateStations}">
+                                        <td><span
+                                                th:text="${routePoint.station.id} + ', ' + ${routePoint.station.name}">Station id, name</span>
+                                        </td>
+                                        <td><span th:text="${routePoint.arrival}">Arrival Date</span></td>
+                                        <td><span th:text="${routePoint.departure}">Departure Date</span></td>
+                                        <td>
+                                            <!-- GET FORM FOR UPDATE ROUTE_POINT-->
+                                            <form th:method="GET"
+                                                  th:action="@{/admin/routes/{routePointId}/edit/show-edit-form(routePointId=${routePoint.id})}">
+                                                <input type="hidden" value="${route.id}">
+                                                <button
+                                                        class="btn btn-success btn-rounded"
+                                                        type="submit">
+                                                    <i class="fas fa-edit "></i>
+                                                </button>
+                                            </form>
+                                            <!-- POST FORM FOR DELETE ROUTE_POINT-->
+                                            <form th:method="POST"
+                                                  th:action="@{/admin/routes/delete/{routePointId}(routePointId=${routePoint.id})}">
+                                                <button
+                                                        class="btn btn-outline-danger btn-rounded"
+                                                        type="submit">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <!-- GET FORM FOR ADD FORM ROUTE_POINT-->
+                                    <form th:method="GET"
+                                          th:action="@{/admin/routes/{routeId}/show-add-form(routeId=${route.id})}">
+                                        <button
+                                                class="btn btn-success btn-rounded"
+                                                type="submit">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </form>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </td>
+                    </div>
+                    <div th:if="${route.intermediateStations.size == 0}">
+                        <td>No departure station</td>
+                        <td>No arrival station</td>
+                        <td>
+                            <form th:method="GET"
+                                  th:action="@{/admin/routes/{routeId}/show-add-form(routeId=${route.id})}">
+                                <button
+                                        class="btn btn-success btn-rounded"
+                                        type="submit">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
+                            <!-- POST FORM FOR DELETE ROUTE_POINT-->
+                            <form th:method="POST" th:action="@{/admin/routes/{routeId}/delete(routeId=${route.id})}">
+                                <button
+                                        class="btn btn-outline-danger btn-rounded"
+                                        type="submit">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </div>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <form th:method="GET" action="#" th:action="@{/admin/routes/add-new-route}">
+            <button type="submit" class="btn btn-success btn-rounded">Add Route</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

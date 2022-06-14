@@ -53,19 +53,19 @@
                     </thead>
                     <tbody>
 
-                    <th:block th:each="route : ${suitableRoutes}">
+                    <th:block th:each="routeDTO : ${suitableRoutes}">
                         <tr>
-                            <td style="text-align:center" th:text="'${route.trainId}' + 'K'"/>
+                            <td style="text-align:center" th:text="'${routeDTO.trainId}' + 'K'"/>
                             </strong>
                             <br>
-                            <a th:href="@{/booking/route/{id}(id=${route.routeId})}" th:text="Route"/>">Route</a>
+                            <a th:href="@{/booking/routeDTO/{id}(id=${routeDTO.routeId})}" th:text="Route"/>">Route</a>
                             </td>
 
-                            <td th:text="${route.departureStation} + ' - ' + ${route.arrivalStation}"></td>
+                            <td th:text="${routeDTO.departureStation} + ' - ' + ${routeDTO.arrivalStation}"></td>
 
-                            <td th:text="${route.departure} + ' - ' + ${route.arrival}"></td>
+                            <td th:text="${routeDTO.departure} + ' - ' + ${routeDTO.arrival}"></td>
 
-                            <td th:text="${route.roadTime}"></td>
+                            <td th:text="${routeDTO.roadTime}"></td>
                         </tr>
                     </th:block>
                     </tbody>

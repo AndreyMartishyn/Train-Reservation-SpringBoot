@@ -1,20 +1,19 @@
 package ua.martishyn.app.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "station")
-@Data
-@Getter
-@Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Station implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Data
+public class Station implements Serializable{
+    private static final long serialVersionUID = -6132796262750494244L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +25,5 @@ public class Station implements Serializable {
 
     @Column(name = "code")
     private String code;
+
 }

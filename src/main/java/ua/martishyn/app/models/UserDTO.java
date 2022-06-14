@@ -10,8 +10,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
+@Builder
 public class UserDTO {
 
     private Integer id;

@@ -8,13 +8,14 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
+@Data
+@Builder
 public class StationDTO {
 
     private Integer id;
+
     @NotEmpty
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff\\-]{1,16}$   ",
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff\\-]{1,16}$",
             message = "Station name should be from 1 to 16 letters cyrillic/latin")
     private String name;
 
@@ -23,16 +24,4 @@ public class StationDTO {
             message = "Code should be only up to 3 capitals cyrillic/latin")
     private String code;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StationDTO that = (StationDTO) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

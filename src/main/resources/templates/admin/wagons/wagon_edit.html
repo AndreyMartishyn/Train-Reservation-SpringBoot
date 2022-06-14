@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 800px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <form action="#" th:action="@{/admin/wagons/{id}/edit(id=${wagon.id})}" th:object="${wagon}" method="POST">
+                <br>
+                <div class="row d-flex justify-content-center">
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                    </div>
+                    <input type="hidden" th:field="*{route}" value="${wagon.route}">
+                    <td class="row">
+                        <div class="col-md-3">
+                            <div class="input-group mb-3">
+                                <select class="form-select" th:field="*{type}" required>
+                                    <option th:each="type : ${T(ua.martishyn.app.utils.Type).values()}"
+                                            th:value="${type}"
+                                            th:text="${type}">
+                                    </option>
+                                </select>
+                            </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" th:field="*{numOfSeats}"
+                                           placeholder="Number of seats number" th:errorclass="is-invalid" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" th:field="*{basePrice}"
+                                           placeholder="Basic price for seat" th:errorclass="is-invalid" required>
+                                </div>
+
+                                <div align="center">
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-success btn-rounded">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>

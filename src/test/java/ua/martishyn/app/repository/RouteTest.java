@@ -20,15 +20,15 @@ public class RouteTest {
 
     @Test
     public void test(){
-        final List<RoutePoint> all = routeRepository.findAll();
-        Assert.assertEquals(10, all.size());
-        final RoutePoint routePoint = all.get(0);
-        System.out.println(routePoint.getId());
-        System.out.println(routePoint.getId().getStation());
-        System.out.println(routePoint.getArrival());
-        System.out.println(routePoint.getDeparture());
-        System.out.println(routePoint.getTrain());
-
+//        final List<RoutePoint> all = routeRepository.findAll();
+//        Assert.assertEquals(10, all.size());
+//        final RoutePoint routePoint = all.get(0);
+//        System.out.println(routePoint.getId());
+//        System.out.println(routePoint.getId().getStation());
+//        System.out.println(routePoint.getArrival());
+//        System.out.println(routePoint.getDeparture());
+//        System.out.println(routePoint.getTrain());
+//
 
 
     }

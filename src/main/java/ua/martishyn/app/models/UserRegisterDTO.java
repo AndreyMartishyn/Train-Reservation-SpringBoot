@@ -1,6 +1,7 @@
 package ua.martishyn.app.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.martishyn.app.utils.passwords_match_validator.PasswordFieldMatch;
@@ -11,8 +12,10 @@ import javax.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @PasswordFieldMatch(field = "password",
-                    fieldMatch = "verifyPassword")
+        fieldMatch = "verifyPassword")
+@Builder
 public class UserRegisterDTO {
 
     @NotEmpty(message = "First name cannot be empty")

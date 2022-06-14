@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 800px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <form action="#" th:action="@{/admin/routes/add-route}" th:object="${newRoute}" method="POST">
+                <br>
+                <div class="row d-flex justify-content-center">
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                    </div>
+                    <td class="row">
+                        <div class="col-md-3">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" th:field="*{id}" placeholder="Route number"
+                                       th:errorclass="is-invalid" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" th:field="*{trainId}" placeholder="Train number"
+                                       th:errorclass="is-invalid" required>
+                            </div>
+                            <div align="center">
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-success btn-rounded">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>

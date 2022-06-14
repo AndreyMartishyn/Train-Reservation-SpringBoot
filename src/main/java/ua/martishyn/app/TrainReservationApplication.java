@@ -19,8 +19,6 @@ public class TrainReservationApplication {
 		return new ModelMapper();
 	}
 
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(TrainReservationApplication.class, args);
 	}

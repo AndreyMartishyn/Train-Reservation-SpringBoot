@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.martishyn.app.models.StationDTO;
 import ua.martishyn.app.service.StationService;
+import ua.martishyn.app.utils.constants.ControllerConstants;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,18 +32,22 @@ public class StationController {
         } else {
             model.addAttribute("stationsDto", allStationsDto);
         }
-        return "/admin/station_list";
+        return ControllerConstants.STATION_LIST;
     }
 
     @GetMapping("/add")
-        public String showAddForm(@ModelAttribute("station") StationDTO stationDTO){
-            return "/admin/station_add";
+    public String showAddForm(@ModelAttribute("station") StationDTO stationDTO) {
+        return ControllerConstants.STATION_ADD_PAGE;
     }
 
-    @PostMapping("/add")
-    public String addStation(@ModelAttribute("station") StationDTO stationDTO){
+    @PostMapping("/add-new-station")
+    public String addStation(@ModelAttribute("station") @Valid StationDTO stationDTO,
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ControllerConstants.STATION_ADD_PAGE;
+        }
         stationService.addStation(stationDTO);
-        return "redirect:/admin/stations";
+        return ControllerConstants.STATION_REDIRECT;
     }
 
     @GetMapping("/{id}/edit")
@@ -53,29 +58,29 @@ public class StationController {
         } catch (Exception e) {
             log.error("Station not found with id {}", id);
             e.printStackTrace();
-            return "redirect:/admin/stations";
+            return ControllerConstants.STATION_REDIRECT;
         }
-        return "/admin/station_edit";
+        return ControllerConstants.STATION_EDIT_PAGE;
     }
 
     @PostMapping("/{id}/edit")
     public String updateStation(@ModelAttribute("station") @Valid StationDTO stationDTO,
-                             BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "/admin/station_edit";
+                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ControllerConstants.STATION_EDIT_PAGE;
         }
-            stationService.updateStationFromDtoData(stationDTO);
-        return "redirect:/admin/stations";
+        stationService.updateStationFromDtoData(stationDTO);
+        return ControllerConstants.STATION_REDIRECT;
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteUserById(@PathVariable("id") int id){
+    public String deleteUserById(@PathVariable("id") int id) {
         try {
             stationService.deleteUserById(id);
         } catch (Exception e) {
             log.error("Station with id {} not deleted", id);
             e.printStackTrace();
         }
-        return "redirect:/admin/stations";
+        return ControllerConstants.STATION_REDIRECT;
     }
 }

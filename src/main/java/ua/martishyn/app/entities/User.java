@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @Builder
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2100202973203946216L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,7 @@ public class User implements Serializable {
     private String email;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 }
 

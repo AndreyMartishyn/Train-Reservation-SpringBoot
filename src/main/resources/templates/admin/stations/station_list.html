@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 800px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <table class="table table-sm table-bordered align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th> Station Id</th>
+                    <th> Stations Name</th>
+                    <th> International Code</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${noStations}">
+                    <td colspan="3"> No Stations Available</td>
+                </tr>
+                <tr th:each="station : ${stationsDto}">
+                    <td><span th:text="${station.id}"> Station Id </span></td>
+                    <td><span th:text="${station.name}"> Stations Name </span></td>
+                    <td><span th:text="${station.code}"> International Code </span></td>
+                    <td>
+                        <form th:method="GET" action="#" th:action="@{/admin/stations/{id}/edit(id=${station.id})}">
+                            <button class="btn btn-success btn-rounded" type="submit"><i class="fas fa-edit "></i>
+                            </button>
+                        </form>
+
+                        <form th:method="POST" action="#" th:action="@{/admin/stations/delete/{id}(id=${station.id})}">
+                            <button class="btn btn-outline-danger btn-rounded" type="submit"><i
+                                    class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <form th:method="GET" action="#" th:action="@{/admin/stations/add}">
+                <button class="btn btn-success btn-rounded" type="submit">Add Station
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>
