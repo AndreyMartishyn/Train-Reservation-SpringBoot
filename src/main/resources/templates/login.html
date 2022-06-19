@@ -7,7 +7,7 @@
 <body>
 <div class="p-5 text-center bg-image"
      style="background-image: url('/images/background.jpg');
-      height: 650px;">
+      height: 750px;">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -23,7 +23,7 @@
 
                                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
-                                <p th:if="${loginError}" class="error">Wrong email or password</p>
+                                <p style="color:red" th:if="${loginError}" class="error">Wrong email or password</p>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>

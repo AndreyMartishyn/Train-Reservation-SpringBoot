@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 800px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <form action="#" th:action="@{/booking/form/order}" th:object="${ticket}" method="POST">
+                <br>
+                <div class="row d-flex justify-content-center">
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                    </div>
+                    <td class="row">
+                        <div class="col-md-3">
+                                <label class="order-form-label">Your First Name*</label>
+                            </div>
+                        <div class="input-group mb-3">
+                                <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name"
+                                       th:errorclass="is-invalid" required>
+                            </div>
+                        <div class="col-md-3">
+                            <label class="order-form-label">Your Last Name*</label>
+                        </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name"
+                                       th:errorclass="is-invalid" required>
+                            </div>
+                        <div class="col-md-3">
+                            <label class="order-form-label">Your wagon number*</label>
+                        </div>
+                            <div class="input-group mb-3">
+                                <select class="form-select" th:field="*{wagonNum}" id="dropDownList" required>
+                                    <option value="">Select Wagon*</option>
+                                    <option th:each="wagon : ${wagons}" th:value="${wagon.id}"
+                                            th:text="${wagon.id}"></option>
+                                </select>
+                            </div>
+                        <p style="color:red" th:if="${loginError}" class="error" th:text="'No places available in wagon # ' + ${wagonNum}"></p>
+
+                        <br>
+                            <div align="center">
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-success btn-rounded">Update</button>
+                                </div>
+                            </div>
+                        </div>
+            </form>
+            </td>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>

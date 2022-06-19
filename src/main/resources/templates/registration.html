@@ -18,7 +18,7 @@
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
                                 <form class="mx-1 mx-md-4" action="#" th:action="@{/register}" th:object="${user}"
                                       method="post">
-                                    <span style="font-size: 50%" th:if="${#fields.hasErrors('*')}">
+                                    <span style="font-size: 60%" th:if="${#fields.hasErrors('*')}">
                                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                                     </span>
 

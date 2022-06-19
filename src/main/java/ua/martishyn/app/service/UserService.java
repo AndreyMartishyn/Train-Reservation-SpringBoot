@@ -1,18 +1,14 @@
 package ua.martishyn.app.service;
 
-import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.martishyn.app.entities.User;
 import ua.martishyn.app.models.UserDTO;
 import ua.martishyn.app.models.UserRegisterDTO;
 import ua.martishyn.app.repositories.UserRepository;
-import ua.martishyn.app.utils.Role;
+import ua.martishyn.app.utils.enums.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,25 +19,22 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+    private final EmailService emailService;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       ModelMapper modelMapper) {
+                       ModelMapper modelMapper,
+                       EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
+        this.emailService = emailService;
     }
 
-    public Authentication getCurrentUser() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
-
-    @Transactional
-    @SneakyThrows
-    public void  registerUser(UserRegisterDTO userRegisterDTO) {
+    public boolean registerUser(UserRegisterDTO userRegisterDTO) {
         if (checkIfUserExist(userRegisterDTO.getEmail())) {
-            throw new Exception("User already exists for this email");
+            return false;
         }
         User user = User.builder()
                 .firstName(userRegisterDTO.getFirstName())
@@ -51,8 +44,9 @@ public class UserService {
                 .role(Role.CUSTOMER)
                 .build();
         userRepository.save(user);
+        emailService.sendWelcomeLetter(user);
+        return true;
     }
-
 
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -61,38 +55,36 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserDTO getUserDtoByEntityId(int id) throws Exception {
+    public UserDTO getUserDtoByEntityId(Integer id) {
         Optional<User> userFromDb = userRepository.findUserById(id);
-        if (!userFromDb.isPresent()) {
-            throw new Exception("User not found with such id");
-        }
-        return convertToDto(userFromDb.get());
+        return userFromDb.map(this::convertToDto).orElse(null);
     }
 
-    public void updateUserFromDtoData(int id, UserDTO userDTO) throws Exception {
-        final Optional<User> userById = userRepository.findUserById(id);
+    public boolean updateUserFromDtoData(Integer id, UserDTO userDTO) {
+        Optional<User> userById = userRepository.findUserById(id);
         if (!userById.isPresent()) {
-            throw new Exception("User not found with such id");
+            return false;
         }
         User mappedEntity = convertToEntity(userDTO);
         mappedEntity.setPassword(userById.get().getPassword());
         userRepository.save(mappedEntity);
+        return true;
     }
 
-    public void deleteUserById(int userId) throws Exception {
-        Optional<User> userById = userRepository.findById(userId);
+    public boolean deleteUserById(Integer userId) {
+        Optional<User> userById = userRepository.findUserById(userId);
         if (!userById.isPresent()) {
-            throw new Exception("No such user in DB");
+            return false;
         }
-        User deleteUser = userById.get();
-        userRepository.delete(deleteUser);
+        userRepository.delete(userById.get());
+        return true;
     }
 
-    private UserDTO convertToDto(User user) {
+    public UserDTO convertToDto(User user) {
         return modelMapper.map(user, UserDTO.class);
     }
 
-    private User convertToEntity(UserDTO userDTO) {
+    public User convertToEntity(UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
     }
 

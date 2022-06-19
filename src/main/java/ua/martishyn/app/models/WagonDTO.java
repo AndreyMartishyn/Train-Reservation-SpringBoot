@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ua.martishyn.app.utils.Type;
+import ua.martishyn.app.utils.enums.Type;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -30,6 +30,6 @@ public class WagonDTO {
 
     @NotNull
     @Min(value = 1, message = "must be equal or greater than 1")
-    @Max(value = 99, message = "must be equal or less than 999")
+    @Max(value = 999, message = "must be equal or less than 999")
     private Integer basePrice;
 }

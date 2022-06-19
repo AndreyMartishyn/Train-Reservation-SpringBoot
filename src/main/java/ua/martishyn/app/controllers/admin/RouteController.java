@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.martishyn.app.models.RouteDTO;
-import ua.martishyn.app.models.RoutePointDTO;
+import ua.martishyn.app.models.route.RouteDTO;
+import ua.martishyn.app.models.route.RoutePointDTO;
 import ua.martishyn.app.service.RouteService;
 import ua.martishyn.app.service.StationService;
 import ua.martishyn.app.utils.constants.ControllerConstants;
@@ -87,7 +87,7 @@ public class RouteController {
         if (bindingResult.hasErrors()) {
             return ControllerConstants.ROUTE_POINT_ADD_PAGE;
         }
-        routeService.addRoutePointToExistingRoute(routePointDTO);
+        routeService.addOrUpdateRoutePointToExistingRoute(routePointDTO);
         return ControllerConstants.ROUTE_REDIRECT;
     }
 
@@ -97,7 +97,7 @@ public class RouteController {
         if (bindingResult.hasErrors()) {
             return ControllerConstants.ROUTE_POINT_EDIT_PAGE;
         }
-        routeService.updatePointIntExistingRoute(routePointDTO);
+        routeService.addOrUpdateRoutePointToExistingRoute(routePointDTO);
         return ControllerConstants.ROUTE_REDIRECT;
     }
 

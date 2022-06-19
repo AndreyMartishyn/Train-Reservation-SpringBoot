@@ -1,0 +1,86 @@
+<!DOCTYPE html >
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 650px;" >
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div align="center">
+
+        <br>
+        <div class="col-4" >
+            <div class="card-transparent "  style="background-color: rgba(245, 245, 245, 0.7); border-radius:10px;">
+            <h5 class="card-header">Your personal information</h5>
+                <div class="card-body" align="left">
+                    <h5 class="card-title" align="center">Here you may change your bio</h5>
+                    <p class="card-text" th:text="'First name:  ' + ${currentUser.firstName}"></p>
+                    <p class="card-text" th:text="'Surname:  ' + ${currentUser.lastName}"></p>
+                    <p class="card-text" th:text="'Email:  ' + ${currentUser.email}"></p>
+                    <p class="card-text" >Mobile phone num</p>
+                    <p class="card-text" >About me</p>
+                </div>
+
+                    <section class="mb-4">
+                        <!-- Facebook -->
+                        <a
+                                class="btn btn-link btn-floating btn-lg text-dark m-1"
+                                href="https://facebook.com"
+                                role="button"
+                                data-mdb-ripple-color="dark"
+                        ><i class="fab fa-facebook-f"></i
+                        ></a>
+
+                        <!-- Twitter -->
+                        <a
+                                class="btn btn-link btn-floating btn-lg text-dark m-1"
+                                href="https://twitter.com"
+                                role="button"
+                                data-mdb-ripple-color="dark"
+                        ><i class="fab fa-twitter"></i
+                        ></a>
+
+                        <!-- Google -->
+                        <a
+                                class="btn btn-link btn-floating btn-lg text-dark m-1"
+                                href="https://google.com"
+                                role="button"
+                                data-mdb-ripple-color="dark"
+                        ><i class="fab fa-google"></i
+                        ></a>
+
+                        <!-- Instagram -->
+                        <a
+                                class="btn btn-link btn-floating btn-lg text-dark m-1"
+                                href="https://instagram.com"
+                                role="button"
+                                data-mdb-ripple-color="dark"
+                        ><i class="fab fa-instagram"></i
+                        ></a>
+
+                        <!-- Github -->
+                        <a
+                                class="btn btn-link btn-floating btn-lg text-dark m-1"
+                                href="https://github.com/AndreyMartishyn/Train-Reservation-SpringBoot"
+                                role="button"
+                                data-mdb-ripple-color="dark"
+                        ><i class="fab fa-github"></i
+                        ></a>
+                    </section>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>
+
+
+

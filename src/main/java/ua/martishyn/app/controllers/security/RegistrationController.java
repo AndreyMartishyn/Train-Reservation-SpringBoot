@@ -33,7 +33,6 @@ public class RegistrationController {
         }
         userService.registerUser(userRegisterDto);
         return "redirect:/index";
-
     }
 
 

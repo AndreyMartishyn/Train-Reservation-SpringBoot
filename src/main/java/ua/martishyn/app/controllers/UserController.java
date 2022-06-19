@@ -1,11 +1,13 @@
-package ua.martishyn.app.controllers.admin;
+package ua.martishyn.app.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.martishyn.app.config.security.UserPrincipal;
 import ua.martishyn.app.models.UserDTO;
 import ua.martishyn.app.service.UserService;
 import ua.martishyn.app.utils.constants.ControllerConstants;
@@ -15,7 +17,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/admin/users")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -24,7 +26,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+
+    @GetMapping("/about")
+    public String aboutMePage(@AuthenticationPrincipal UserPrincipal principal,
+                              Model model){
+        model.addAttribute("currentUser", principal.getUser());
+        return "/customer/user_about";
+    }
+
+    @GetMapping("/admin/all")
     public String getAllUsers(Model model) {
         List<UserDTO> dtoList = userService.getAllUsers();
         if (dtoList.isEmpty()) {
@@ -35,41 +45,36 @@ public class UserController {
         return ControllerConstants.USER_LIST;
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/admin/{id}/edit")
     public String showEditForm(@PathVariable("id") int id, Model model) {
-        try {
-            UserDTO userDto = userService.getUserDtoByEntityId(id);
-            model.addAttribute("user", userDto);
-        } catch (Exception e) {
+        UserDTO userDto = userService.getUserDtoByEntityId(id);
+        if (userDto == null) {
             log.error("User not found with id {}", id);
-            e.printStackTrace();
             return ControllerConstants.USER_REDIRECT;
         }
+        model.addAttribute("user", userDto);
         return ControllerConstants.USER_EDIT_PAGE;
     }
 
-    @PostMapping("/{id}/edit")
+
+    @PostMapping("/admin/{id}/edit")
     public String updateUser(@ModelAttribute("user") @Valid UserDTO userDTO,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ControllerConstants.USER_EDIT_PAGE;
         }
-        try {
-            userService.updateUserFromDtoData(userDTO.getId(), userDTO);
-        } catch (Exception e) {
-            log.error("User not updated with id {}", userDTO.getId());
-            e.printStackTrace();
+        boolean isUpdated = userService.updateUserFromDtoData(userDTO.getId(), userDTO);
+        if (!isUpdated) {
+            log.error("User with id {} not updated", userDTO.getId());
         }
         return ControllerConstants.USER_REDIRECT;
     }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/admin/delete/{id}")
     public String deleteUserById(@PathVariable("id") int id) {
-        try {
-            userService.deleteUserById(id);
-        } catch (Exception e) {
+        boolean isDeleted = userService.deleteUserById(id);
+        if (!isDeleted) {
             log.error("User with id {} not deleted", id);
-            e.printStackTrace();
         }
         return ControllerConstants.USER_REDIRECT;
     }

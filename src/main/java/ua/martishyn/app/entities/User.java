@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ua.martishyn.app.utils.Role;
+import ua.martishyn.app.utils.enums.Role;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,5 +41,6 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
 }
 

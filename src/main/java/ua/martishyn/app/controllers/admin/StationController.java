@@ -76,7 +76,7 @@ public class StationController {
     @PostMapping("/delete/{id}")
     public String deleteUserById(@PathVariable("id") int id) {
         try {
-            stationService.deleteUserById(id);
+            stationService.deleteStationById(id);
         } catch (Exception e) {
             log.error("Station with id {} not deleted", id);
             e.printStackTrace();

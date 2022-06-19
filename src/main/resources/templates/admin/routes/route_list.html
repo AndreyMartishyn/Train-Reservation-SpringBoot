@@ -12,17 +12,17 @@
             <table class="table table-sm table-bordered align-middle mb-0 bg-white">
                 <thead>
                 <tr>
-                    <th> Route Id</th>
-                    <th> Train Id</th>
-                    <th> Departure Date</th>
-                    <th> Arrival Date</th>
-                    <th> Stations En-route</th>
+                    <th th:text="#{admin.route.id}"></th>
+                    <th th:text="#{admin.route.train}"></th>
+                    <th th:text="#{admin.route.departure}"></th>
+                    <th th:text="#{admin.route.arrival}"></th>
+                    <th th:text="#{admin.route.stations}"></th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${noRoutes}">
-                    <td colspan="5"> No Routes Available</td>
+                    <td colspan="5" th th:text="#{admin.no.routes.found}"></td>
                 </tr>
                 <tr th:each="route: ${routeList}">
                     <td><span th:text="${route.id}"> Route Id </span></td>
@@ -45,8 +45,9 @@
                                     data-mdb-toggle="collapse"
                                     data-mdb-target="#collapseExample"
                                     aria-expanded="false"
-                                    aria-controls="collapseExample">
-                                Show route-points
+                                    aria-controls="collapseExample"
+                                    th th:text="#{admin.route.show.route-point}">
+
                             </button>
 
                             <!-- Collapsed content -->
@@ -54,10 +55,10 @@
                                 <table class="table table-sm table-bordered align-middle">
                                     <thead>
                                     <tr>
-                                        <th> Station id, name</th>
-                                        <th> Arrival Date</th>
-                                        <th> Departure Date</th>
-                                        <th> Action</th>
+                                        <th th:text="#{admin.route-point.station}"></th>
+                                        <th th:text="#{admin.route.departure}"></th>
+                                        <th th:text="#{admin.route.arrival}"></th>
+                                        <th th:text="#{admin.actions}"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -105,8 +106,8 @@
                         </td>
                     </div>
                     <div th:if="${route.intermediateStations.size == 0}">
-                        <td>No departure station</td>
-                        <td>No arrival station</td>
+                        <td th:text="#{admin.no.station}"></td>
+                        <td th:text="#{admin.no.station}"></td>
                         <td>
                             <form th:method="GET"
                                   th:action="@{/admin/routes/{routeId}/show-add-form(routeId=${route.id})}">
@@ -134,9 +135,12 @@
         </div>
         <br>
         <form th:method="GET" action="#" th:action="@{/admin/routes/add-new-route}">
-            <button type="submit" class="btn btn-success btn-rounded">Add Route</button>
+            <button type="submit" class="btn btn-success btn-rounded" th:text="#{button.add.route}"></button>
         </form>
     </div>
 </div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
 </body>
 </html>

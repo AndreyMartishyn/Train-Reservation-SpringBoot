@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 1200px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <table class="table table-sm table-bordered align-middle mb-0 bg-white">
+                <thead>
+                <tr>
+                    <th scope="col">Ticket number</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">From/To</th>
+                    <th scope="col">Schedule</th>
+                    <th scope="col">Wagon</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Comfort type</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Price(UAH)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ticket : ${tickets}">
+                    <td style="text-align:center" th:text="${ticket.id}"/>
+                    </td>
+                    <td th:text="${ticket.passengerDetails.firstName}"></td>
+
+                    <td th:text="${ticket.passengerDetails.lastName}"></td>
+
+                    <td th:text="${ticket.departure.station.name} + ' - ' + ${ticket.arrival.station.name}"></td>
+
+                    <td th:text="${ticket.departure.departure} + ' - ' + ${ticket.arrival.arrival}"></td>
+
+                    <td th:text="${ticket.ticketDetails.wagonNum}"></td>
+
+                    <td th:text="${ticket.ticketDetails.duration}"></td>
+
+                    <td th:text="${ticket.ticketDetails.type}"></td>
+
+                    <td th:text="${ticket.ticketDetails.status}"></td>
+
+
+                    <td th:text="${ticket.ticketDetails.price}"></td>
+                </tr>
+                </tbody>
+                <tr>
+                    <td colspan="10"> <span style="text-align: left; color:red; font-family:courier; font-size:79%;">
+				*After you will pay for ticket, you may download it
+				</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>
+
+
+

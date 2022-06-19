@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 1200px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <table class="table table-sm table-bordered align-middle mb-0 bg-white">
+                <thead>
+                <tr>
+                    <th scope="col">Train</th>
+                    <th scope="col">From/To</th>
+                    <th scope="col">Schedule</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Seats available</th>
+                    <th scope="col">Price(UAH)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="matchingRoute : ${suitableRoutes}">
+                    <td style="text-align:center" th:text="${matchingRoute.routeDTO.trainId} + 'K'"/>
+                    </strong>
+                    <!--                            <a th:href="@{/booking/routeDTO/{id}(id=${routeDTO.routeId})}" th:text="Route"/>">Route</a>-->
+                    </td>
+
+                    <td th:text="${matchingRoute.routeDTO.firstStation.station.name} + ' - ' + ${matchingRoute.routeDTO.lastStation.station.name}"></td>
+
+                    <td th:text="${matchingRoute.routeDTO.firstStation.departure} + ' - ' + ${matchingRoute.routeDTO.firstStation.arrival}"></td>
+
+                    <td th:text="${matchingRoute.roadTime}">
+                    <td styles="text-align:center">
+
+                        <span th:if="${matchingRoute.seatsDetails.firstClassSeats !=0}">
+                            F1
+                            <p th:text="${matchingRoute.seatsDetails.firstClassSeats}"/>
+
+                            <a th:href="@{/booking/form(route=${matchingRoute.routeDTO.id},
+                                                     from=${matchingRoute.routeDTO.firstStation.id},
+                                                     to=${matchingRoute.routeDTO.lastStation.id},
+                                                     departure=${matchingRoute.routeDTO.firstStation.departure},
+                                                     arrival=${matchingRoute.routeDTO.lastStation.arrival},
+                                                     duration=${matchingRoute.roadTime},
+                                                     type=FIRST,
+                                                     price=${matchingRoute.seatsDetails.firstClassTotalPrice})}"
+                               class="btn btn-dark"> Buy
+                            </a>
+                        </span>
+                        <span th:unless="${matchingRoute.seatsDetails.firstClassSeats !=0}">
+                            F1
+                            <p th:text="${matchingRoute.seatsDetails.firstClassSeats} + ' Places'"/>
+
+                            <button type="button" class="btn btn-dark" disabled> Buy </button>
+                        </span>
+                        <br>
+                        <span th:if="${matchingRoute.seatsDetails.secondClassSeats != 0}">
+                            S2
+                            <p th:text="${matchingRoute.seatsDetails.secondClassSeats}"/>
+                            <a th:href="@{/booking/form(route=${matchingRoute.routeDTO.id},
+                                                     from=${matchingRoute.routeDTO.firstStation.station.name},
+                                                     to=${matchingRoute.routeDTO.lastStation.station.name},
+                                                     departure=${matchingRoute.routeDTO.firstStation.departure},
+                                                     arrival=${matchingRoute.routeDTO.lastStation.arrival},
+                                                     duration=${matchingRoute.roadTime},
+                                                     type=${T(ua.martishyn.app.utils.Type).SECOND}
+                                                     price=${matchingRoute.seatsDetails.secondClassTotalPrice}
+                                                     )}"
+                               class="btn btn-dark"> Buy
+                            </a>
+                        </span>
+                    <span th:unless="${matchingRoute.seatsDetails.secondClassSeats !=0}">
+                            S2
+                            <p th:text="${matchingRoute.seatsDetails.firstClassSeats} + ' Places'"/>
+
+                            <button type="button" class="btn btn-dark" disabled> Buy </button>
+                        </span>
+                    </td>
+                    <td>
+                        <div th:if="${matchingRoute.seatsDetails.firstClassSeats != 0}">
+                            <p style="text-align: center" th:text="${matchingRoute.seatsDetails.firstClassTotalPrice}"/>
+                        </div>
+                        <br>
+                        <div th:if="${matchingRoute.seatsDetails.secondClassSeats != 0}">
+                            <p style="text-align: center"
+                               th:text="${matchingRoute.seatsDetails.secondClassTotalPrice}"/>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tr>
+                    <td colspan="5"> <span style="text-align: left; color:red; font-family:courier; font-size:79%;">
+				*Only registered users can buy tickets. Login or you will be redirected accordingly
+				</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>
+
+
+

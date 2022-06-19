@@ -1,7 +1,8 @@
-package ua.martishyn.app.models;
+package ua.martishyn.app.models.route;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import ua.martishyn.app.models.StationDTO;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -15,21 +16,18 @@ import java.time.LocalDateTime;
 @Builder
 public class RoutePointDTO {
 
-    @NotNull
     private Integer id;
 
-    @NotNull
     private Integer routeId;
 
+    @NotNull
     private StationDTO station;
 
     @NotNull
-    @Past(message = "date must be not in a past")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime arrival;
 
     @NotNull
-    @Past(message = "date must be not in a past")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime departure;
 

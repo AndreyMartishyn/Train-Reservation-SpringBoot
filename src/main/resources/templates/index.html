@@ -5,8 +5,8 @@
 <div th:replace="fragments/head :: head"></div>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div   class="p-5 text-center bg-image"
-        style="background-image: url('/images/background.jpg');
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
       height: 650px;">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
         <br>
@@ -14,70 +14,29 @@
             <div class="col-md-5">
                 <form action="#" th:action="@{/booking}" method="get">
                     <div class="form-group">
-                        <select class="custom-select mr-sm-2" name="stationFrom">
-                            <option value="0">Select Departure Station</option>
+                        <select class="custom-select mr-sm-2" name="stationFrom" required>
+                            <option value="">Select Departure Station</option>
                             <option th:each="station : ${stations}" th:value="${station.id}"
                                     th:text="${station.name}"></option>
                         </select>
 
                     </div>
                     <div class="form-group">
-                        <select class="custom-select mr-sm-2" name="stationTo">
-                            <option value="0">Select Arrival Station</option>
+                        <select class="custom-select mr-sm-2" name="stationTo" required>
+                            <option value="">Select Arrival Station</option>
                             <option th:each="station : ${stations}" th:value="${station.id}"
                                     th:text="${station.name}"></option>
                         </select>
                         </select>
                     </div>
-                    <p th:if="${noStations}" class="error">There are no stations</p>
-                    <p th:text="${sameStations}"></p>
+                    <p th:if="${sameStations}" class="error">Chosen station are same</p>
+                    <p th:if="${noStations}" class="error">There are no routes for your stations</p>
                     <button type="submit" class="btn btn-dark" value="Search">Search</button>
                 </form>
             </div>
         </div>
-
-        <div th:if="${not #lists.isEmpty(suitableRoutes)}">
-
-            <br><br>
-            <div align="center">
-                <table class="table table-striped table-responsive-md btn-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Train</th>
-                        <th scope="col">From/To</th>
-                        <th scope="col">Schedule</th>
-                        <th scope="col">Duration</th>
-                        <th scope="col">Seats available</th>
-                        <th scope="col">Price(UAH)</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <th:block th:each="routeDTO : ${suitableRoutes}">
-                        <tr>
-                            <td style="text-align:center" th:text="'${routeDTO.trainId}' + 'K'"/>
-                            </strong>
-                            <br>
-                            <a th:href="@{/booking/routeDTO/{id}(id=${routeDTO.routeId})}" th:text="Route"/>">Route</a>
-                            </td>
-
-                            <td th:text="${routeDTO.departureStation} + ' - ' + ${routeDTO.arrivalStation}"></td>
-
-                            <td th:text="${routeDTO.departure} + ' - ' + ${routeDTO.arrival}"></td>
-
-                            <td th:text="${routeDTO.roadTime}"></td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                    <span style="text-align: left; color:red; font-family:courier; font-size:79%;">
-				*Only registered users can buy tickets. Login or you will be redirected accordingly
-				</span>
-                </table>
-            </div>
-        </div>
     </div>
 </div>
-
 <!-- Footer Start -->
 <div th:replace="fragments/footer :: footer"></div>
 <!-- Footer End -->

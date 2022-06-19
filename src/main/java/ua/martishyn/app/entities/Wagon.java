@@ -3,7 +3,7 @@ package ua.martishyn.app.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ua.martishyn.app.utils.Type;
+import ua.martishyn.app.utils.enums.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;

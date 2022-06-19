@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.martishyn.app.entities.Route;
 import ua.martishyn.app.entities.RoutePoint;
-import ua.martishyn.app.models.RouteDTO;
-import ua.martishyn.app.models.RoutePointDTO;
+import ua.martishyn.app.models.route.RouteDTO;
+import ua.martishyn.app.models.route.RoutePointDTO;
 import ua.martishyn.app.repositories.RoutePointRepository;
 import ua.martishyn.app.repositories.RouteRepository;
 import ua.martishyn.app.repositories.TrainRepository;
@@ -42,8 +42,8 @@ public class RouteService {
 
     /**
      * Search database for all routes with route-points
-     * <p>
-     * Return: List<Integer> of routes ids.
+     *
+     * @return  List<Integer> of routes ids.
      */
     public List<Integer> getAllNotEmptyRoutesIds() {
         return routeRepository.findAll()
@@ -57,14 +57,9 @@ public class RouteService {
         routeRepository.save(routeToSave);
     }
 
-    public void addRoutePointToExistingRoute(RoutePointDTO routePointDTO) {
+    public void addOrUpdateRoutePointToExistingRoute(RoutePointDTO routePointDTO) {
         RoutePoint routePointToSave = convertRoutePointDtoToEntity(routePointDTO);
         routePointRepository.save(routePointToSave);
-    }
-
-    public void updatePointIntExistingRoute(RoutePointDTO routePointDTO) {
-        RoutePoint routePointUpdated = convertRoutePointDtoToEntity(routePointDTO);
-        routePointRepository.save(routePointUpdated);
     }
 
     public void deleteRoute(Integer routeId) {
@@ -74,6 +69,7 @@ public class RouteService {
     public RoutePointDTO getRoutePointDtoById(Integer id) {
         return convertRoutePointToDTO(routePointRepository.getById(id));
     }
+
 
     public void deleteRoutePoint(Integer routePointId) {
         routePointRepository.deleteById(routePointId);

@@ -11,40 +11,49 @@
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
         <div class="opacity-80">
             <form action="#" th:action="@{/admin/routes/add-point}" th:object="${newPoint}" method="POST">
+                <input type="hidden" th:field="*{routeId}" value="${routeId}">
                 <br>
                 <div class="row d-flex justify-content-center">
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                     </div>
                     <td class="row">
-                        <div class="col-md-3">
-                            <input type="hidden" th:field="*{routeId}" value="${routeId}">
-                            <div class="input-group mb-3">
+                        <div class="col-md-4">
+                            <div class="card-transparent ">
+                                <div class="card-block special-card"
+                                     style="background-color: rgba(245, 245, 245, 0.7); border-radius:10px;">
+                                    <h5 class="card-header" th:text="#{admin.route-point.add.form}"></h5>
+                                    <div class="form-helper" th:text="#{admin.stations.name}"></div>
+                                    <div class="input-group mb-3">
                                 <select class="form-select" th:field="*{station.id}" id="dropDownList" required>
-                                    <option value="">Select Station</option>
                                     <option th:each="stationObj : ${stationList}" th:value="${stationObj.id}"
                                             th:text="${stationObj.name}"></option>
                                 </select>
                             </div>
-                            <div class="input-group mb-3">
+                                    <div class="form-helper" th:text="#{admin.route.departure}"></div>
+                                    <div class="input-group mb-3">
                                 <input type="datetime-local" class="form-control" th:field="*{departure}"
                                        placeholder="Departure info" th:errorclass="is-invalid" required>
                             </div>
-                            <div class="input-group mb-3">
+                                    <div class="form-helper" th:text="#{admin.route.arrival}"></div>
+                                    <div class="input-group mb-3">
                                 <input type="datetime-local" class="form-control" th:field="*{arrival}"
                                        placeholder="Arrival info" th:errorclass="is-invalid" required>
                             </div>
                             <div align="center">
                                 <div class="col-4">
-                                    <button type="submit" class="btn btn-success btn-rounded">Add</button>
+                                    <button type="submit" class="btn btn-success btn-rounded" th:text="#{button.add.route-point}"></button>
                                 </div>
                             </div>
+                            <br>
                         </div>
-                    </td>
                 </div>
-            </form>
         </div>
+        </td>
     </div>
+    </form>
+</div>
+</div>
 </div>
 <!-- Footer Start -->
 <div th:replace="fragments/footer :: footer"></div>

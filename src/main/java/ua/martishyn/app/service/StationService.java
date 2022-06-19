@@ -45,21 +45,20 @@ public class StationService {
         stationRepository.save(stationEntity);
     }
 
-    public void deleteUserById(int id) throws Exception {
+    public boolean deleteStationById(int id) {
         Optional<Station> stationFromDb = stationRepository.findStationById(id);
         if (!stationFromDb.isPresent()) {
-            throw new Exception("Station not found");
+            return false;
         }
         stationRepository.delete(stationFromDb.get());
+        return true;
     }
 
-    private StationDTO convertToDto(Station station) {
+    public StationDTO convertToDto(Station station) {
         return modelMapper.map(station, StationDTO.class);
     }
 
-    private Station convertToEntity(StationDTO stationDTO) {
+    public Station convertToEntity(StationDTO stationDTO) {
         return modelMapper.map(stationDTO, Station.class);
     }
-
-
 }

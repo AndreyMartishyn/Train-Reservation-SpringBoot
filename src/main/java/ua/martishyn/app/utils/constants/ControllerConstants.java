@@ -8,7 +8,7 @@ public class ControllerConstants {
     /**
      * User controller constants
      */
-    public static final String USER_REDIRECT = "redirect:/admin/users";
+    public static final String USER_REDIRECT = "redirect:/users/admin/add";
     public static final String USER_LIST = "/admin/users/user_list";
     public static final String USER_EDIT_PAGE = "/admin/users/user_edit";
 

@@ -1,7 +1,7 @@
 package ua.martishyn.app.models;
 
 import lombok.*;
-import ua.martishyn.app.utils.Role;
+import ua.martishyn.app.utils.enums.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
