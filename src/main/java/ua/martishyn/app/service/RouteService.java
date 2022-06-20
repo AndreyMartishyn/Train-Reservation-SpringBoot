@@ -54,6 +54,19 @@ public class RouteService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Call sublist method of List implementation to get only certain route-points as
+     * per departure and arrival station. Aggregates including intermediate stations
+     *
+     * Example: Route consists of following Route-Points:
+     * A -> B -> C -> D . Our interested route is B->D.
+     * This method gives us Station B, C, D collected in List
+     *
+     * @param routeId       routeId which contains all route-points
+     * @param stationFromId from station id(route-point)
+     * @param stationToId   to station id (route-point)
+     * @return List<RoutePointDTO> of collected routes
+     */
     public List<RoutePointDTO> collectRoutePointsForView(Integer routeId,
                                                          Integer stationFromId,
                                                          Integer stationToId) {

@@ -2,6 +2,7 @@ package ua.martishyn.app.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ua.martishyn.app.entities.Station;
 import ua.martishyn.app.models.StationDTO;
@@ -33,6 +34,16 @@ public class StationService {
         return allStations.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    public List<StationDTO> getAllStationsDtoPaginated(Integer pageNum,
+                                                       Integer pageSize) {
+        return stationRepository.findAll(PageRequest.of(pageNum, pageSize))
+                .stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    public long getRowsCountForStations(){
+        return stationRepository.count();
     }
 
     public StationDTO getStationDtoById(int id) {

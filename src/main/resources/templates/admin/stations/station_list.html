@@ -41,6 +41,28 @@
                 </tbody>
             </table>
             <br>
+            <!--Pagination start -->
+            <nav class="blog-pagination justify-content-center d-flex">
+                <ul class="pagination">
+                    <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <div th:with="result = ${currentPage eq i}">
+                            <div th:if="${result}">
+                                <li class="page-item active">
+                                    <a th:href="@{/admin/stations/all(currentPage = ${i})}"
+                                       class="page-link" th:text="${i}"></a>
+                                </li>
+                            </div>
+                            <div th:unless="${result}">
+                                <li class="page-item">
+                                    <a th:href="@{/admin/stations/all(currentPage = ${i})}"
+                                       class="page-link" th:text="${i}"></a>
+                                </li>
+                            </div>
+                        </div>
+                    </th:block>
+                </ul>
+            </nav>
+            <!--Pagination end -->
             <form th:method="GET" action="#" th:action="@{/admin/stations/add}">
                 <button class="btn btn-success btn-rounded" type="submit" th:text="#{button.add.station}"></button>
             </form>

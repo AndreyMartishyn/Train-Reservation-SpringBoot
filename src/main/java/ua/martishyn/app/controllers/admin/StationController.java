@@ -24,13 +24,21 @@ public class StationController {
         this.stationService = stationService;
     }
 
-    @GetMapping
-    public String getAllStations(Model model) {
-        List<StationDTO> allStationsDto = stationService.getAllStationsDto();
-        if (allStationsDto.isEmpty()) {
+
+    @GetMapping("/all")
+    public String findPaginatedStation(@RequestParam(defaultValue = "1") int currentPage,
+                                Model model) {
+        int pageSize = 2;
+        List<StationDTO> allStationsDtoPaginated = stationService.getAllStationsDtoPaginated(currentPage - 1, pageSize);
+        long rowsQuantity = stationService.getRowsCountForStations();
+        if (allStationsDtoPaginated.isEmpty()) {
             model.addAttribute("noStations", true);
         } else {
-            model.addAttribute("stationsDto", allStationsDto);
+            model.addAttribute("currentPage", currentPage);
+            long totalPages = rowsQuantity % pageSize == 0 ?
+                    rowsQuantity / pageSize : rowsQuantity / pageSize + 1;
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("stationsDto", allStationsDtoPaginated);
         }
         return ControllerConstants.STATION_LIST;
     }
