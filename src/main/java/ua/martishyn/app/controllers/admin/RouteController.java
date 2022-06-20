@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/routes")
+@RequestMapping()
 @Slf4j
 public class RouteController {
     private final RouteService routeService;
@@ -29,7 +29,7 @@ public class RouteController {
         this.stationService = stationService;
     }
 
-    @GetMapping
+    @GetMapping("/admin/routes")
     public String getAllRoutes(Model model) {
         List<RouteDTO> routes = routeService
                 .getAllRoutesDTO();
@@ -41,12 +41,22 @@ public class RouteController {
         return ControllerConstants.ROUTE_LIST;
     }
 
-    @GetMapping("/add-new-route")
+
+    @GetMapping("/booking/track")
+    public String showFoundRouteSchedule(@RequestParam("routeId") Integer routeId,
+                                         @RequestParam("firstStation") Integer stationFromId,
+                                         @RequestParam("lastStation") Integer stationToId,
+                                         Model model){
+        model.addAttribute("desiredRoute", routeService.collectRoutePointsForView(routeId, stationFromId, stationToId));
+        return "/common/show_route_schedule";
+    }
+
+    @GetMapping("/admin/routes/add-new-route")
     public String showAddNewRouteForm(@ModelAttribute("newRoute") RouteDTO routeDTO) {
         return ControllerConstants.ROUTE_ADD_PAGE;
     }
 
-    @PostMapping("/add-route")
+    @PostMapping("/admin/routes/add-route")
     public String addNewRoute(@ModelAttribute("newRoute") @Valid RouteDTO routeDTO,
                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -56,14 +66,14 @@ public class RouteController {
         return ControllerConstants.ROUTE_REDIRECT;
     }
 
-    @PostMapping("/{routeId}/delete")
+    @PostMapping("/admin/routes/{routeId}/delete")
     public String addNewRoute(@PathVariable("routeId") Integer routeId) {
         routeService.deleteRoute(routeId);
         return ControllerConstants.ROUTE_REDIRECT;
 
     }
 
-    @GetMapping("/{routeId}/show-add-form")
+    @GetMapping("/admin/routes/{routeId}/show-add-form")
     public String showRoutePointEditForm(@PathVariable("routeId") Integer routeId,
                                          @ModelAttribute("newPoint") RoutePointDTO routePointDTO,
                                          Model model) {
@@ -73,7 +83,7 @@ public class RouteController {
         return ControllerConstants.ROUTE_POINT_ADD_PAGE;
     }
 
-    @GetMapping("/{routePointId}/edit/show-edit-form")
+    @GetMapping("/admin/routes/{routePointId}/edit/show-edit-form")
     public String showRoutePointEditForm(@PathVariable("routePointId") Integer routePointId,
                                          Model model) {
         model.addAttribute("routePoint", routeService.getRoutePointDtoById(routePointId));
@@ -81,7 +91,7 @@ public class RouteController {
         return ControllerConstants.ROUTE_POINT_EDIT_PAGE;
     }
 
-    @PostMapping("/add-point")
+    @PostMapping("/admin/routes/add-point")
     public String addRoutePoint(@ModelAttribute("newPoint") @Valid RoutePointDTO routePointDTO,
                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -91,7 +101,7 @@ public class RouteController {
         return ControllerConstants.ROUTE_REDIRECT;
     }
 
-    @PostMapping("/edit-point")
+    @PostMapping("/admin/routes/edit-point")
     public String updateRoutePoint(@ModelAttribute("routePoint") @Valid RoutePointDTO routePointDTO,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -101,7 +111,7 @@ public class RouteController {
         return ControllerConstants.ROUTE_REDIRECT;
     }
 
-    @PostMapping("/delete/{routePointId}")
+    @PostMapping("/admin/routes/delete/{routePointId}")
     public String addRoutePoint(@PathVariable("routePointId") Integer routePointId) {
         routeService.deleteRoutePoint(routePointId);
         return ControllerConstants.ROUTE_REDIRECT;

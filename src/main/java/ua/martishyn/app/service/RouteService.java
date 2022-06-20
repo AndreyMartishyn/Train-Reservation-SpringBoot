@@ -14,6 +14,8 @@ import ua.martishyn.app.repositories.TrainRepository;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,13 +45,29 @@ public class RouteService {
     /**
      * Search database for all routes with route-points
      *
-     * @return  List<Integer> of routes ids.
+     * @return List<Integer> of routes ids.
      */
     public List<Integer> getAllNotEmptyRoutesIds() {
         return routeRepository.findAll()
                 .stream().filter(route -> !route.getRoutePoints().isEmpty())
                 .map(Route::getRouteId)
                 .collect(Collectors.toList());
+    }
+
+    public List<RoutePointDTO> collectRoutePointsForView(Integer routeId,
+                                                         Integer stationFromId,
+                                                         Integer stationToId) {
+        Optional<Route> selectedRoute = routeRepository.findById(routeId);
+        RouteDTO routeDTO = convertToDto(selectedRoute.get());
+        List<RoutePointDTO> intermediateStations = routeDTO.getIntermediateStations();
+        final RoutePointDTO departurePoint = intermediateStations.stream()
+                .filter(routePointDTO -> Objects.equals(routePointDTO.getId(), stationFromId))
+                .findFirst().get();
+        final RoutePointDTO arrivalPoint = intermediateStations.stream()
+                .filter(routePointDTO -> Objects.equals(routePointDTO.getId(), stationToId))
+                .findFirst().get();
+        return intermediateStations.subList(intermediateStations.indexOf(departurePoint),
+                intermediateStations.indexOf(arrivalPoint) + 1);
     }
 
     public void addRouteWithoutStations(RouteDTO routeDTO) {
@@ -98,4 +116,6 @@ public class RouteService {
     private RoutePoint convertRoutePointDtoToEntity(RoutePointDTO routePointDTO) {
         return modelMapper.map(routePointDTO, RoutePoint.class);
     }
+
+
 }

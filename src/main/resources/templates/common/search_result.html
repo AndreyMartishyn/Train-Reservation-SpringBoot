@@ -22,16 +22,22 @@
                 </thead>
                 <tbody>
                 <tr th:each="matchingRoute : ${suitableRoutes}">
-                    <td style="text-align:center" th:text="${matchingRoute.routeDTO.trainId} + 'K'"/>
-                    </strong>
-                    <!--                            <a th:href="@{/booking/routeDTO/{id}(id=${routeDTO.routeId})}" th:text="Route"/>">Route</a>-->
+                    <td>
+                        <p style="text-align:center" th:text="${matchingRoute.routeDTO.trainId} + 'K'"/>
+                        <form th:method="GET" th:action="@{/booking/track}">
+                            <input type="hidden" th:value="${matchingRoute.routeDTO.id}" name="routeId">
+                            <input type="hidden" th:value="${matchingRoute.routeDTO.firstStation.id}" name="firstStation">
+                            <input type="hidden" th:value="${matchingRoute.routeDTO.lastStation.id}" name="lastStation">
+                            <button class="btn btn-outline-primary" data-mdb-ripple-color="dark" type="submit"><i class="fas fa-route"></i>
+                            </button>
+                        </form>
                     </td>
 
                     <td th:text="${matchingRoute.routeDTO.firstStation.station.name} + ' - ' + ${matchingRoute.routeDTO.lastStation.station.name}"></td>
 
                     <td th:text="${matchingRoute.routeDTO.firstStation.departure} + ' - ' + ${matchingRoute.routeDTO.firstStation.arrival}"></td>
 
-                    <td th:text="${matchingRoute.roadTime}">
+                    <td th:text="${matchingRoute.roadTime}"></td>
                     <td styles="text-align:center">
 
                         <span th:if="${matchingRoute.seatsDetails.firstClassSeats !=0}">
@@ -46,14 +52,14 @@
                                                      duration=${matchingRoute.roadTime},
                                                      type=FIRST,
                                                      price=${matchingRoute.seatsDetails.firstClassTotalPrice})}"
-                               class="btn btn-dark"> Buy
+                               class="btn btn-outline-success"> <i class="fas fa-check"></i></i>
                             </a>
                         </span>
                         <span th:unless="${matchingRoute.seatsDetails.firstClassSeats !=0}">
                             F1
                             <p th:text="${matchingRoute.seatsDetails.firstClassSeats} + ' Places'"/>
 
-                            <button type="button" class="btn btn-dark" disabled> Buy </button>
+                            <button type="button" class="btn btn-dark" disabled> <i class="fas fa-check"></i></i></button>
                         </span>
                         <br>
                         <span th:if="${matchingRoute.seatsDetails.secondClassSeats != 0}">
@@ -68,14 +74,14 @@
                                                      type=${T(ua.martishyn.app.utils.Type).SECOND}
                                                      price=${matchingRoute.seatsDetails.secondClassTotalPrice}
                                                      )}"
-                               class="btn btn-dark"> Buy
+                               class="btn btn-outline-success"> <i class="fas fa-check"></i></i>
                             </a>
                         </span>
                     <span th:unless="${matchingRoute.seatsDetails.secondClassSeats !=0}">
                             S2
                             <p th:text="${matchingRoute.seatsDetails.firstClassSeats} + ' Places'"/>
 
-                            <button type="button" class="btn btn-dark" disabled> Buy </button>
+                            <button type="button" class="btn btn-dark" disabled> <i class="fas fa-check"></i></button>
                         </span>
                     </td>
                     <td>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head :: head"></div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
+      height: 1200px;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="opacity-80">
+            <table class="table table-sm table-bordered align-middle mb-0 bg-white">
+                <thead>
+                <tr>
+                    <th scope="col">Route schedule</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r, iter : ${desiredRoute}">
+                    <td>
+                        <div th:if="${iter.first}">
+                            <p th:text="${r.station.name}">
+                            <p th:text="${r.departure}">
+                        </div>
+                        <div th:if="${iter.last}">
+                            <p th:text="${r.station.name} + ': '"></p>
+                            <p th:text="${r.arrival}"></p>
+                        </div>
+                        <div th:if="${(iter.last==false && iter.first==false)}">
+                            <p th:text="${r.station.name}">
+                            <p th:text="${r.departure}">
+                            <p th:text="${r.arrival}">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tr>
+                    <td colspan="1"> <span style="text-align: left; color:green; font-family:courier; font-size:79%;">
+				*After you will pay for ticket, you may download it
+				</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Footer Start -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- Footer End -->
+</body>
+</html>
+
+
+

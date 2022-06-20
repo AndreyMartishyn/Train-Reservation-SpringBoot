@@ -37,12 +37,6 @@ public class BookingController {
         this.ticketService = ticketService;
     }
 
-    @ModelAttribute("ticket")
-    public BookingData bookingFormDTO() {
-        return new BookingData();
-    }
-
-
     @GetMapping
     public String findTickets(@RequestParam("stationFrom") int fromId,
                               @RequestParam("stationTo") int toId,
@@ -61,6 +55,7 @@ public class BookingController {
         }
         return ControllerConstants.INDEX_PAGE_REDIRECT;
     }
+
 
     /**
      * Get data from URL parameters and keeps it in the Map.
