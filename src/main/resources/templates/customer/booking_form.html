@@ -9,7 +9,7 @@
       height: 800px;">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
         <div class="opacity-80">
-            <form action="#" th:action="@{/booking/form/order}" th:object="${ticket}" method="POST">
+            <form action="#" th:action="@{/booking/form/order}" th:object="${data}" method="POST">
                 <br>
                 <div class="row d-flex justify-content-center">
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">

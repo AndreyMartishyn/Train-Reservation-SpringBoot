@@ -20,8 +20,7 @@ import ua.martishyn.app.service.UserService;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +35,7 @@ class UserServiceTest {
     @Spy
     private PasswordEncoder passwordEncoder;
 
-    @Spy
+    @Mock
     private EmailService emailService;
 
     @InjectMocks
@@ -70,6 +69,7 @@ class UserServiceTest {
                 .password("password1")
                 .build();
         when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.empty());
+        when(emailService.sendWelcomeLetter(any(User.class))).thenReturn(true);
         Assertions.assertTrue(userService.registerUser(userRegisterDTO));
     }
 

@@ -1,6 +1,7 @@
 package ua.martishyn.app.models.route;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class RouteDTO {
 
     @NotNull
@@ -25,6 +27,7 @@ public class RouteDTO {
     @Max(value = 99, message = "must be equal or less than 999")
     private Integer trainId;
 
+    @Builder.Default
     private List<RoutePointDTO> intermediateStations = new ArrayList<>();
 
     public void addRoutePointToRoute(RoutePointDTO routePointDTO) {

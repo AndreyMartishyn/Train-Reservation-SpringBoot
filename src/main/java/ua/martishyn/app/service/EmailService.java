@@ -29,7 +29,14 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String username;
 
-    public void send(String emailTo, String subject) {
+    @Value("${spring.mail.welcome.subject}")
+    private String subject;
+
+    private static final String IMAGE_ROOT = "src/main/resources/static/images/";
+    private static final String MAIL_ROOT = "src/main/resources/static/email/";
+
+
+    private boolean send(String emailTo, String text) {
         try {
             MimeMessage message = myMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -37,36 +44,44 @@ public class EmailService {
             helper.setTo(emailTo);
             helper.setSubject(subject);
             MimeMultipart multipart = new MimeMultipart("related");
-
-            // first part (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
-            String htmlText = readFromFile("src/main/resources/static/email/welcome.html");
-            messageBodyPart.setContent(htmlText, "text/html");
-            // add it
+            messageBodyPart.setContent(text, "text/html");
             multipart.addBodyPart(messageBodyPart);
-
-            // second part (the image)
             messageBodyPart = new MimeBodyPart();
-            DataSource fds = new FileDataSource(
-                    "src/main/resources/static/images/local_railway.png");
-
+            DataSource fds = new FileDataSource(IMAGE_ROOT + "local_railway.png");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<image>");
 
-            // add image to the multipart
             multipart.addBodyPart(messageBodyPart);
-
-            // put everything together
             message.setContent(multipart);
             myMailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
             log.error("Error sending email!", e);
+            return false;
         }
+        log.info("Email send for customer with email: {} ", emailTo);
+        return true;
     }
 
-    public void sendWelcomeLetter(User user) {
-        send(user.getEmail(), "Welcome to Local Railways");
+    public boolean sendWelcomeLetter(User user) {
+        String htmlText = readFromFile(MAIL_ROOT + "welcome.html");
+        return send(user.getEmail(), htmlText);
+    }
+
+    public boolean sendBookingNotification(User user) {
+        String htmlText = readFromFile(MAIL_ROOT + "order_made.html");
+        return send(user.getEmail(), htmlText);
+    }
+
+    public boolean sendOrderPayedConfirmation(User user) {
+        String htmlText = readFromFile(MAIL_ROOT + "order_payed.html");
+        return send(user.getEmail(), htmlText);
+    }
+
+    public boolean sendBookingCancellation(User user) {
+        String htmlText = readFromFile(MAIL_ROOT + "order_cancelled.html");
+        return send(user.getEmail(), htmlText);
     }
 
     private String readFromFile(String path) {

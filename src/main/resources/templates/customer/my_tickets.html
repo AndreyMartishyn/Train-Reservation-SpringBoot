@@ -22,6 +22,8 @@
                     <th scope="col">Comfort type</th>
                     <th scope="col">Status</th>
                     <th scope="col">Price(UAH)</th>
+                    <th scope="col">Information</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -46,6 +48,38 @@
 
 
                     <td th:text="${ticket.ticketDetails.price}"></td>
+
+                    <td>
+                    <div th:if="${ticket.ticketDetails.status == T(ua.martishyn.app.utils.enums.TicketStatus).NOT_PAID}">
+                        <!-- POST FORM FOR TICKET PAY-->
+                        <form th:method="POST"
+                              th:action="@{/tickets/show/pay/{id}(id=${ticket.id})}">
+                            <button
+                                    class="btn btn-outline-success"
+                                    type="submit">
+                                <i class="far fa-credit-card fa-4x"></i>
+                            </button>
+                        </form>
+                        <!-- POST FORM FOR TICKET Cancellation-->
+                        <form th:method="POST"
+                              th:action="@{/tickets/show/cancel/{id}(id=${ticket.id})}">
+                            <button
+                                    class="btn btn-outline-danger btn-rounded"
+                                    type="submit">
+                                <i class="far fa-times-circle fa-4x"></i>
+                            </button>
+                        </form>
+                    </div>
+                        <div th:unless="${ticket.ticketDetails.status == T(ua.martishyn.app.utils.enums.TicketStatus).NOT_PAID}">
+                            <!-- TICKET download-->
+                                <button
+                                        class="btn btn-outline-success"
+                                        type="submit">
+                                    <i class="fas fa-file-download fa-4x"></i>
+                                </button>
+                        </div>
+
+                    </td>
                 </tr>
                 </tbody>
                 <tr>

@@ -35,7 +35,7 @@
 
                     <td th:text="${matchingRoute.routeDTO.firstStation.station.name} + ' - ' + ${matchingRoute.routeDTO.lastStation.station.name}"></td>
 
-                    <td th:text="${matchingRoute.routeDTO.firstStation.departure} + ' - ' + ${matchingRoute.routeDTO.firstStation.arrival}"></td>
+                    <td th:text="${matchingRoute.routeDTO.firstStation.departure} + ' - ' + ${matchingRoute.routeDTO.lastStation.arrival}"></td>
 
                     <td th:text="${matchingRoute.roadTime}"></td>
                     <td styles="text-align:center">

@@ -32,7 +32,7 @@ class UserControllerTest {
     @Test
     @WithUserDetails("andrey95sevas@gmail.com")
     void shouldReturnUsersPageWhenAccessingUsersPage() throws Exception {
-        this.mockMvc.perform(get("/admin/users"))
+        this.mockMvc.perform(get("/users/admin/all"))
                 .andDo(print())
                 .andExpect(authenticated())
                 .andExpect(status().isOk());

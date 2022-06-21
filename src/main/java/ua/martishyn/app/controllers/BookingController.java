@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/booking")
-@SessionAttributes("ticket")
+@SessionAttributes("data")
 @Slf4j
 public class BookingController {
     private final RouteFinderService routeFindHelper;
@@ -35,6 +35,12 @@ public class BookingController {
         this.routeFindHelper = routeFindHelper;
         this.wagonService = wagonService;
         this.ticketService = ticketService;
+    }
+
+    @ModelAttribute("data")
+    public BookingData getData() {
+        return new BookingData();
+
     }
 
     @GetMapping
@@ -67,14 +73,14 @@ public class BookingController {
 
     @GetMapping("/form")
     public String showDataForChosenTicket(@RequestParam Map<String, String> reqParam,
-                                          @ModelAttribute("ticket") BookingData bookingData,
+                                          @ModelAttribute("data") BookingData bookingData,
                                           Model model) {
         model.addAttribute("wagons", wagonService.getAllWagonsByRouteId(bookingData.getRoute()));
         return "/customer/booking_form.html";
     }
 
     @PostMapping("/form/order")
-    public String showDataForChosenTicket(@ModelAttribute("ticket") BookingData bookingData,
+    public String showDataForChosenTicket(@ModelAttribute("data") BookingData bookingData,
                                           @AuthenticationPrincipal UserPrincipal currentUser,
                                           SessionStatus status,
                                           Model model) {
@@ -83,7 +89,7 @@ public class BookingController {
             model.addAttribute("noPlace", true);
             return "redirect:/booking/form";
         }
-        ticketService.createTicketFromUserData(bookingData, currentUser);
+        ticketService.createTicketFromUserData(bookingData, currentUser.getUser());
         log.info("Ticket ordered successfully for Route #{}", bookingData.getRoute());
         status.setComplete();
         return ControllerConstants.INDEX_PAGE_REDIRECT;

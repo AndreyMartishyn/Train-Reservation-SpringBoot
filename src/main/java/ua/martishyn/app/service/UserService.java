@@ -44,8 +44,7 @@ public class UserService {
                 .role(Role.CUSTOMER)
                 .build();
         userRepository.save(user);
-        emailService.sendWelcomeLetter(user);
-        return true;
+        return emailService.sendWelcomeLetter(user);
     }
 
     public List<UserDTO> getAllUsers() {

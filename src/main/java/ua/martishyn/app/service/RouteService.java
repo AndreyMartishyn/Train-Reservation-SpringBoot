@@ -57,27 +57,27 @@ public class RouteService {
     /**
      * Call sublist method of List implementation to get only certain route-points as
      * per departure and arrival station. Aggregates including intermediate stations
-     *
+     * <p>
      * Example: Route consists of following Route-Points:
      * A -> B -> C -> D . Our interested route is B->D.
      * This method gives us Station B, C, D collected in List
      *
-     * @param routeId       routeId which contains all route-points
-     * @param stationFromId from station id(route-point)
-     * @param stationToId   to station id (route-point)
+     * @param routeId          routeId which contains all route-points
+     * @param routePointFromId from station id(route-point)
+     * @param routePointToId   to station id (route-point)
      * @return List<RoutePointDTO> of collected routes
      */
     public List<RoutePointDTO> collectRoutePointsForView(Integer routeId,
-                                                         Integer stationFromId,
-                                                         Integer stationToId) {
+                                                         Integer routePointFromId,
+                                                         Integer routePointToId) {
         Optional<Route> selectedRoute = routeRepository.findById(routeId);
         RouteDTO routeDTO = convertToDto(selectedRoute.get());
         List<RoutePointDTO> intermediateStations = routeDTO.getIntermediateStations();
-        final RoutePointDTO departurePoint = intermediateStations.stream()
-                .filter(routePointDTO -> Objects.equals(routePointDTO.getId(), stationFromId))
+        RoutePointDTO departurePoint = intermediateStations.stream()
+                .filter(routePointDTO -> Objects.equals(routePointDTO.getId(), routePointFromId))
                 .findFirst().get();
-        final RoutePointDTO arrivalPoint = intermediateStations.stream()
-                .filter(routePointDTO -> Objects.equals(routePointDTO.getId(), stationToId))
+        RoutePointDTO arrivalPoint = intermediateStations.stream()
+                .filter(routePointDTO -> Objects.equals(routePointDTO.getId(), routePointToId))
                 .findFirst().get();
         return intermediateStations.subList(intermediateStations.indexOf(departurePoint),
                 intermediateStations.indexOf(arrivalPoint) + 1);
@@ -101,12 +101,11 @@ public class RouteService {
         return convertRoutePointToDTO(routePointRepository.getById(id));
     }
 
-
     public void deleteRoutePoint(Integer routePointId) {
         routePointRepository.deleteById(routePointId);
     }
 
-    private RouteDTO convertToDto(Route route) {
+    public RouteDTO convertToDto(Route route) {
         RouteDTO routeDTO = modelMapper.map(route, RouteDTO.class);
         Type listType = new TypeToken<List<RoutePointDTO>>() {
         }.getType();
@@ -115,7 +114,7 @@ public class RouteService {
         return routeDTO;
     }
 
-    private Route convertEmptyRouteDtoToEntity(RouteDTO routeDTO) {
+    public Route convertEmptyRouteDtoToEntity(RouteDTO routeDTO) {
         Route route = new Route();
         route.setRouteId(routeDTO.getId());
         route.setTrain(trainRepository.getById(routeDTO.getTrainId()));

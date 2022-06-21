@@ -2,7 +2,7 @@ package ua.martishyn.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.martishyn.app.models.*;
+import ua.martishyn.app.models.WagonDTO;
 import ua.martishyn.app.models.booking.MatchingRoute;
 import ua.martishyn.app.models.booking.MatchingRouteSeatsDetails;
 import ua.martishyn.app.models.route.RouteDTO;
@@ -12,35 +12,32 @@ import ua.martishyn.app.utils.enums.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 @Service
 public class RouteFinderService {
 
     private final RouteService routeService;
-    private final StationService stationService;
     private final WagonService wagonService;
 
     @Autowired
     public RouteFinderService(RouteService routeService,
-                              StationService stationService,
                               WagonService wagonService) {
         this.routeService = routeService;
-        this.stationService = stationService;
         this.wagonService = wagonService;
     }
 
     public List<MatchingRoute> makeBooking(int from, int to) {
         List<MatchingRoute> matchingRouteList = new ArrayList<>();
         List<RouteDTO> routeDTOS = routeService.getAllRoutesDTO();
-        StationDTO fromStation = stationService.getStationDtoById(from);
-        StationDTO toStation = stationService.getStationDtoById(to);
 
         for (RouteDTO routeDTO : routeDTOS) {
             final List<RoutePointDTO> routePointsList = routeDTO.getIntermediateStations();
             //checks if arrival and departure stations are in route
-            if (stationsExistInRoute(routePointsList, fromStation, toStation)) {
+            if (stationsExistInRoute(routePointsList, from, to)) {
                 MatchingRoute personalRoute = new MatchingRoute();
                 RouteDTO userRoute = new RouteDTO();
                 userRoute.setId(routeDTO.getId());
@@ -51,12 +48,12 @@ public class RouteFinderService {
 
                 for (RoutePointDTO routePointDTO : routePointsList) {
                     int stationId = routePointDTO.getStation().getId();
-                    if (stationId == fromStation.getId()) {
+                    if (stationId == from) {
                         userRoute.addRoutePointToRoute(routePointDTO);
                         fromId = overallStationCounter;
                     }
                     overallStationCounter++;
-                    if (stationId == toStation.getId()) {
+                    if (stationId == to) {
                         toId = overallStationCounter;
                         userRoute.addRoutePointToRoute(routePointDTO);
                     }
@@ -64,12 +61,11 @@ public class RouteFinderService {
                 if (fromId < toId) {
                     personalRoute.setRouteDTO(userRoute);
                     int totalStationInRoute = toId - fromId;
-                    DateFormat routePattern = new SimpleDateFormat("HH:mm");
-                    long duration = Duration.between(
+                    Duration duration = Duration.between(
                             (personalRoute.getRouteDTO().getFirstStation().getDeparture()),
-                            personalRoute.getRouteDTO().getLastStation().getArrival()).toMillis();
-                    String durationFormatted = routePattern.format(new Date(duration));
-                    personalRoute.setRoadTime(durationFormatted);
+                            personalRoute.getRouteDTO().getLastStation().getArrival());
+                    String formattedDuration = String.format("%d:%02d", duration.toHours(), duration.toMinutes() % 60);
+                    personalRoute.setRoadTime(formattedDuration);
 
                     final List<WagonDTO> allWagonsByRouteId = wagonService.getAllWagonsByRouteId(personalRoute.getRouteDTO().getId());
                     personalRoute.setSeatsDetails(collectSeatsDetails(totalStationInRoute, allWagonsByRouteId));
@@ -101,17 +97,16 @@ public class RouteFinderService {
      * Check if stations exists in list of RoutePoints. Compares input
      * with list by ids
      *
-     * @param stations    - list of collected stations from route
-     * @param fromStation - departure station selected by user
-     * @param toStation   - arrival station selected by user
+     * @param stations - list of collected stations from route
+     * @param from     - departure station(id)
+     * @param to       - arrival station(id)
      * @return true, if stations both stations exist in list. Otherwise false;
      */
     private boolean stationsExistInRoute(List<RoutePointDTO> stations,
-                                         StationDTO fromStation,
-                                         StationDTO toStation) {
-        return (stations.stream().anyMatch(routePoint -> Objects.equals(routePoint.getStation().getId(), fromStation.getId()))
+                                         int from, int to) {
+        return (stations.stream().anyMatch(routePoint -> routePoint.getStation().getId() == from)
                 &&
-                stations.stream().anyMatch(routePoint -> Objects.equals(routePoint.getStation().getId(), toStation.getId())));
+                stations.stream().anyMatch(routePoint -> routePoint.getStation().getId() == to));
     }
 
     private int getCertainClassTotalPrice(Type type,
