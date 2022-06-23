@@ -8,16 +8,16 @@
 <div class="p-5 text-center bg-image"
      style="background-image: url('/images/background.jpg');
       height: 800px;">
-    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);">
         <div class="opacity-80">
             <form action="#" th:action="@{/admin/routes/edit-point}" th:object="${routePoint}" method="POST">
                 <input type="hidden" th:field="*{routeId}" value="${routeId}">
                 <input type="hidden" th:field="*{id}" value="${routePoint.id}">
                 <br>
                 <div class="row d-flex justify-content-center">
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-                    </div>
+                    <span style="font-size: 70%; color:yellow;" th:if="${#fields.hasErrors('*')}">
+                                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                                    </span>
                     <td class="row">
                         <div class="col-md-4">
                             <div class="card-transparent ">

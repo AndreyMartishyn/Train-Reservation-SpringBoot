@@ -22,17 +22,17 @@ public class Wagon implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "route_id")
+    @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
+    @Column(name = "type" ,nullable = false)
     private Type type;
 
-    @Column(name = "num_of_seats")
+    @Column(name = "num_of_seats" , nullable = false)
     private Integer numOfSeats;
 
-    @Column(name = "base_price")
+    @Column(name = "base_price" ,nullable = false)
     private Integer basePrice;
 
 }

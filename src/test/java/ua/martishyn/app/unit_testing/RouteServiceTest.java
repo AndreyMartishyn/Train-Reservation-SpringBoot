@@ -18,6 +18,7 @@ import ua.martishyn.app.repositories.RoutePointRepository;
 import ua.martishyn.app.repositories.RouteRepository;
 import ua.martishyn.app.repositories.TrainRepository;
 import ua.martishyn.app.service.RouteService;
+import ua.martishyn.app.service.TrainService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +40,7 @@ class RouteServiceTest {
     private RoutePointRepository routePointRepository;
 
     @Spy
-    private TrainRepository trainRepository;
+    private TrainService trainService;
 
     @Spy
     private ModelMapper modelMapper;
@@ -53,7 +54,7 @@ class RouteServiceTest {
 
     @BeforeEach
     void initServiceClass() {
-        routeService = new RouteService(routeRepository, trainRepository, routePointRepository, modelMapper);
+        routeService = new RouteService(routeRepository, trainService, routePointRepository, modelMapper);
         partsOfRoute = new ArrayList<>();
         route = new Route();
         route.setRouteId(111);

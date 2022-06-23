@@ -3,6 +3,7 @@ package ua.martishyn.app.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.martishyn.app.entities.Wagon;
 import ua.martishyn.app.models.WagonDTO;
 import ua.martishyn.app.repositories.RouteRepository;
@@ -28,12 +29,14 @@ public class WagonService {
         this.modelMapper = modelMapper;
     }
 
+    @Transactional(readOnly = true)
     public List<WagonDTO> getAllWagonsDTO() {
         return wagonRepository.findAll().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<WagonDTO> getAllWagonsByRouteId(Integer routeId) {
         return wagonRepository.findAllWagonsByRouteId(routeId).stream()
                 .map(this::convertToDto)
@@ -47,18 +50,32 @@ public class WagonService {
      * @return true if seats available and wagon is present,
      * otherwise - false
      */
+
+    @Transactional
     public boolean checkForAvailablePlaceAndBook(Integer wagonNum) {
-        Optional<Wagon> wagonToBeUpdated
-                = wagonRepository.findById(wagonNum);
+        Wagon wagonToBeUpdated
+                = wagonRepository.getById(wagonNum);
         boolean isUpdated = false;
-        if (wagonToBeUpdated.isPresent() &&
-                wagonToBeUpdated.get().getNumOfSeats() > 0) {
-            int numOfFreePlaces = wagonToBeUpdated.get().getNumOfSeats();
-            wagonToBeUpdated.get().setNumOfSeats(numOfFreePlaces - 1);
-            wagonRepository.save(wagonToBeUpdated.get());
+        if (wagonToBeUpdated.getNumOfSeats() > 0) {
+            int numOfFreePlaces = wagonToBeUpdated.getNumOfSeats();
+            wagonToBeUpdated.setNumOfSeats(numOfFreePlaces - 1);
+            wagonRepository.save(wagonToBeUpdated);
             isUpdated = true;
         }
         return isUpdated;
+    }
+
+    /**
+     * Increase number of free seats in wagon by 1.
+     *
+     * @param wagonNum - id of wagon in ticket
+     */
+    @Transactional
+    public void replenishPlaceAfterCancelling(Integer wagonNum) {
+        Wagon wagonToBeUpdated
+                = wagonRepository.getById(wagonNum);
+        wagonToBeUpdated.setNumOfSeats(wagonToBeUpdated.getNumOfSeats() + 1);
+        wagonRepository.save(wagonToBeUpdated);
     }
 
     /**
@@ -93,15 +110,18 @@ public class WagonService {
                 .map(wagonDTO -> wagonDTO.getBasePrice() * numOfStation).orElse(0);
     }
 
+    @Transactional(readOnly = true)
     public WagonDTO getWagonDtoById(Integer id) {
         return convertToDto(wagonRepository.getById(id));
     }
 
+    @Transactional
     public void createOrUpdateWagon(WagonDTO wagonDTO) {
         Wagon wagonToSave = convertDtoToEntity(wagonDTO);
         wagonRepository.save(wagonToSave);
     }
 
+    @Transactional
     public void deleteWagon(Integer wagonId) {
         wagonRepository.deleteById(wagonId);
     }
@@ -115,6 +135,5 @@ public class WagonService {
         wagonEntity.setRoute(routeRepository.findById(wagonDTO.getRoute()).get());
         return wagonEntity;
     }
-
 
 }

@@ -9,11 +9,8 @@ import ua.martishyn.app.models.route.RouteDTO;
 import ua.martishyn.app.models.route.RoutePointDTO;
 import ua.martishyn.app.utils.enums.Type;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

@@ -1,17 +1,19 @@
 package ua.martishyn.app.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table (name = "route_point")
+@Table(name = "route_point")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class RoutePoint implements Serializable{
+public class RoutePoint implements Serializable {
     private static final long serialVersionUID = -258390888911213382L;
 
     @Id
@@ -20,17 +22,17 @@ public class RoutePoint implements Serializable{
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="route_id")
+    @JoinColumn(name = "route_id")
     private Route route;
 
     @OneToOne
-    @JoinColumn(name="station_id")
+    @JoinColumn(name = "station_id", nullable = false)
     private Station station;
 
-    @Column(name = "arrival")
+    @Column(name = "arrival", nullable = false)
     private LocalDateTime arrival;
 
-    @Column(name = "departure")
+    @Column(name = "departure", nullable = false)
     private LocalDateTime departure;
 
 }

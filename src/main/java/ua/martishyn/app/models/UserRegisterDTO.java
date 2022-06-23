@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ua.martishyn.app.utils.passwords_match_validator.PasswordFieldMatch;
+import ua.martishyn.app.utils.validation.passwords_match.PasswordFieldMatch;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -18,28 +19,28 @@ import javax.validation.constraints.Pattern;
 @Builder
 public class UserRegisterDTO {
 
-    @NotEmpty(message = "First name cannot be empty")
+    @NotBlank(message = "{user.lastname.notblank}")
     @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{1,16}$",
-            message = "First name should be from 1 to 16 letters cyrillic/latin")
+            message = "{user.firstname.pattern}")
     private String firstName;
 
-    @NotEmpty(message = "Last name cannot be empty")
+    @NotBlank(message = "{user.lastname.notblank}")
     @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{1,16}$",
-            message = "Last name should be from 1 to 16 letters cyrillic/latin")
+            message = "user.lastname.pattern")
     private String lastName;
 
-    @NotEmpty(message = "Password field cannot be empty")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[A-Z])[A-Za-z\\d]{8,}$",
-            message = "Password should be 8 symbols, at least 1 capital and 1 digit")
+    @NotBlank(message = "{user.password.notblank}")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[A-Z])[A-Za-z\\d]{8,16}$",
+            message = "{user.password.pattern}")
     private String password;
 
-    @NotEmpty(message = "Password field cannot be empty")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[A-Z])[A-Za-z\\d]{8,}$",
-            message = "Password should be 8 symbols, at least 1 capital and 1 digit")
+    @NotBlank(message = "{user.password.notblank}")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[A-Z])[A-Za-z\\d]{8,16}$",
+            message = "{user.password.pattern}")
     private String verifyPassword;
 
-    @NotEmpty(message = "Email field cannot be empty")
-    @Email(message = "Please enter valid email")
+    @NotBlank(message = "{user.email.notblank}")
+    @Email(message = "{user.email.notcorrect}")
     private String email;
 
 }

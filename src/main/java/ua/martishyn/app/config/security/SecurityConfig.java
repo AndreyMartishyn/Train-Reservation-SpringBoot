@@ -39,16 +39,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/about-us").permitAll()
-                .antMatchers("/booking/track/**").permitAll()
                 .antMatchers("/booking").permitAll()
+                .antMatchers("/booking/track/**").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/static/**").permitAll()
 
-                .antMatchers("user/booking/**").hasRole(CUSTOMER_ROLE)
+                .antMatchers("/booking/form/**").hasRole(CUSTOMER_ROLE)
+                .antMatchers("/tickets/show/**").hasRole(CUSTOMER_ROLE)
+                .antMatchers("/users/about").hasRole(CUSTOMER_ROLE)
 
-                .antMatchers("admin/stations/**").hasRole(ADMIN_ROLE)
-                .antMatchers("admin/routes/**").hasRole(ADMIN_ROLE)
-                .antMatchers("admin/users/**").hasRole(ADMIN_ROLE)
+                .antMatchers("/admin/**").hasRole(ADMIN_ROLE)
+                .antMatchers("/users/about/").hasRole(ADMIN_ROLE)
+                .antMatchers("/users/**").hasRole(ADMIN_ROLE)
+
+
+
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -1,4 +1,11 @@
+
+spring.jpa.properties.javax.persistence.schema-generation.create-source=metadata
+spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
+spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql
+
+
 --encoded b-crypt password is 'Password1' as decoded, for login purposes for both users
+
 INSERT INTO user (email, first_name, last_name, pass_encoded, role) VALUES
 ('andrey95sevas@gmail.com', 'Andrii', 'Martishyn', '$2a$10$V0dEaSHPZe24gMfzRCggvuQu0eD7HSEgcsfSe8F6IRxzaC2m5uWti', 'ADMIN'),
 ('customer@gmail.com', 'Andrii', 'Mart', '$2a$10$V0dEaSHPZe24gMfzRCggvuQu0eD7HSEgcsfSe8F6IRxzaC2m5uWti','CUSTOMER');

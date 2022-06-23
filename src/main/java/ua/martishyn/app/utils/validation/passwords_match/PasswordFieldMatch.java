@@ -1,4 +1,4 @@
-package ua.martishyn.app.utils.passwords_match_validator;
+package ua.martishyn.app.utils.validation.passwords_match;
 
 
 import javax.validation.Constraint;

@@ -13,9 +13,9 @@
             <form action="#" th:action="@{/admin/routes/add-route}" th:object="${newRoute}" method="POST">
                 <br>
                 <div class="row d-flex justify-content-center">
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-                    </div>
+                 <span style="font-size: 70%; color:yellow;" th:if="${#fields.hasErrors('*')}">
+                                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                                    </span>
                     <td class="row">
                         <div class="col-md-4">
                             <div class="card-transparent ">
@@ -24,14 +24,16 @@
                                     <h5 class="card-header" th:text="#{admin.route.add.form}"></h5>
                             <div class="form-helper" th:text="#{label.route.route}"></div>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" th:field="*{id}"
+                                <input type="number" class="form-control" th:field="*{id}"
                                        th:errorclass="is-invalid" required>
                             </div>
 
-                            <div class="form-helper" th:text="#{label.route.train}"></div>
+                            <div class="form-helper" th:text="#{booking.found.train}"></div>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" th:field="*{trainId}"
-                                       th:errorclass="is-invalid" required>
+                                <select class="form-select" th:field="*{trainId}" id="dropDownList" required>
+                                    <option th:each="train : ${trains}" th:value="${train.id}"
+                                            th:text="${train.model.model}"></option>
+                                </select>
                             </div>
                             <div align="center">
                                 <div class="col-4">

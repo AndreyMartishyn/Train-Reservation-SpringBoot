@@ -1,11 +1,10 @@
 package ua.martishyn.app.models;
 
 import lombok.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import java.util.Objects;
 
-@ToString
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -14,14 +13,14 @@ public class StationDTO {
 
     private Integer id;
 
-    @NotEmpty
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff\\-]{1,16}$",
-            message = "Station name should be from 1 to 16 letters cyrillic/latin")
+    @NotBlank(message = "{station.name.notblank}")
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff\\-]{4,16}$",
+            message = "{station.name.pattern}")
     private String name;
 
-    @NotEmpty
+    @NotBlank(message = "{station.code.notblank}")
     @Pattern(regexp = "^[A-Z\\u0400-\\u04ff]{1,3}$",
-            message = "Code should be only up to 3 capitals cyrillic/latin")
+            message = "{station.code.pattern}")
     private String code;
 
 }

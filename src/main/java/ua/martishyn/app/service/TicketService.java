@@ -2,7 +2,9 @@ package ua.martishyn.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.martishyn.app.entities.*;
+import ua.martishyn.app.models.WagonDTO;
 import ua.martishyn.app.models.booking.BookingData;
 import ua.martishyn.app.repositories.RoutePointRepository;
 import ua.martishyn.app.repositories.TicketDetailsRepository;
@@ -16,6 +18,7 @@ import java.util.List;
 public class TicketService {
     private final RoutePointRepository routePointRepository;
     private final PassengerService passengerService;
+    private final WagonService wagonService;
     private final TicketRepository ticketRepository;
     private final TicketDetailsRepository ticketDetailsRepository;
     private final EmailService emailService;
@@ -26,20 +29,24 @@ public class TicketService {
                          PassengerService passengerService,
                          TicketRepository ticketRepository,
                          TicketDetailsRepository ticketDetailsRepository,
-                         EmailService emailService) {
+                         EmailService emailService,
+                         WagonService wagonService) {
         this.routePointRepository = routePointRepository;
         this.passengerService = passengerService;
         this.ticketRepository = ticketRepository;
         this.ticketDetailsRepository = ticketDetailsRepository;
         this.emailService = emailService;
         this.ticketHelper = new TicketHelper();
+        this.wagonService = wagonService;
     }
 
+    @Transactional(readOnly = true)
     public List<Ticket> getAllUsersTickets(User user) {
         return ticketRepository.findAllByUser(user);
     }
 
     //TODO: DTO TICKET AND REFACTOR
+    @Transactional
     public void createTicketFromUserData(BookingData bookingData, User user) {
         RoutePoint departureStation = routePointRepository.getById(bookingData.getFrom());
         RoutePoint arrivalStation = routePointRepository.getById(bookingData.getTo());
@@ -51,16 +58,19 @@ public class TicketService {
         emailService.sendBookingNotification(user);
     }
 
+    @Transactional
     private TicketDetails createTicketDetails(BookingData bookingData) {
         TicketDetails ticketDetails = ticketHelper.createTicketDetails(bookingData);
         return ticketDetailsRepository.save(ticketDetails);
     }
 
+    @Transactional
     private PassengerDetails getPassengerFromData(BookingData bookingData) {
         PassengerDetails passengerDetails = ticketHelper.getPassengerDetails(bookingData);
         return passengerService.saveNewPassenger(passengerDetails);
     }
 
+    @Transactional
     public boolean payForTicket(Integer id, User user) {
         //implement working with users balance. Reason of boolean return type
         Ticket ticketFromDb = ticketRepository.getById(id);
@@ -70,8 +80,13 @@ public class TicketService {
         return true;
     }
 
+    @Transactional
     public boolean cancelBooking(Integer id, User user) {
         //implement replenish of occupied place. Reason of boolean return type
+        Ticket ticketFromDB
+                = ticketRepository.getById(id);
+        Integer numOfBookedWagon = ticketFromDB.getTicketDetails().getWagonNum();
+        wagonService.replenishPlaceAfterCancelling(numOfBookedWagon);
         ticketRepository.delete(ticketRepository.getById(id));
         emailService.sendBookingCancellation(user);
         return true;

@@ -13,15 +13,15 @@
 
         <br>
         <div class="col-4" >
-            <div class="card-transparent "  style="background-color: rgba(245, 245, 245, 0.7); border-radius:10px;">
-            <h5 class="card-header">Your personal information</h5>
+            <div class="card-transparent "  style="background-color: rgba(245, 245, 245, 0.8); border-radius:10px;">
+            <h5 class="card-header" th:text="#{about.header}" ></h5>
                 <div class="card-body" align="left">
-                    <h5 class="card-title" align="center">Here you may change your bio</h5>
-                    <p class="card-text" th:text="'First name:  ' + ${currentUser.firstName}"></p>
-                    <p class="card-text" th:text="'Surname:  ' + ${currentUser.lastName}"></p>
-                    <p class="card-text" th:text="'Email:  ' + ${currentUser.email}"></p>
-                    <p class="card-text" >Mobile phone num</p>
-                    <p class="card-text" >About me</p>
+                    <p class="card-text" th:text="#{about.first.name}+':  ' + ${currentUser.firstName}"></p>
+                    <p class="card-text" th:text="#{about.last.name}+':  ' + ${currentUser.lastName}"></p>
+                    <p class="card-text" th:text="#{about.email}+':  '  + ${currentUser.email}"></p>
+                    <p class="card-text" th:text="#{about.phone}"></p>
+                    <p class="card-text" th:text="#{about.me}"></p>
+
                 </div>
 
                     <section class="mb-4">

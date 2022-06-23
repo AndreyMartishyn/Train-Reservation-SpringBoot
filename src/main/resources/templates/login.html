@@ -19,18 +19,16 @@
                                 <form th:action="@{/login}" method="post">
 
 
-                                <h2 class="fw-bold mb-2 text-uppercase">Login Page</h2>
-
-                                <p class="text-white-50 mb-5">Please enter your login and password!</p>
-
-                                <p style="color:red" th:if="${loginError}" class="error">Wrong email or password</p>
+                                <h2 class="fw-bold mb-2 text-uppercase" th:text="#{login.header}"></h2>
+                                    <br>
+                                <p style="color:red" th:if="${loginError}" class="error" th:text="#{login.not.correct}"></p>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="form3Example3c" name="username" class="form-control"
+                                                <input type="email" id="form3Example3c" name="username" class="form-control"
                                                     placeholder="Email"/>
-                                            <label class="form-label" for="form3Example3c">Your Email</label>
+                                            <label class="form-label" for="form3Example3c" th:text="#{label.login.email}"></label>
                                         </div>
                                     </div>
 
@@ -39,28 +37,23 @@
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="password" id="form3Example4c" name="password" class="form-control"
                                             placeholder="Password" />
-                                            <label class="form-label" for="form3Example4c">Password</label>
+                                            <label class="form-label" for="form3Example4c" th:text="#{label.login.password}"></label>
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-dark">Login</button>
+                                    <button type="submit" class="btn btn-dark btn-lg" th:text="#{login.post}"></button>
                                 </form>
-
                             </div>
 
-                                    <div ALIGN="center">
+                                    <div align="center">
 
-                                        <p class="mb-0">Don't have an account? <a th:href="@{/register}"
-                                                                                  class="text-black-50 fw-bold">Sign
-                                            Up</a>
-                                        </p>
+                                        <a th:href="@{/register}" class="text-black-50 fw-bold" th:text="#{login.no-account} + '?'">
+                                           </a>
                                     </div>
 
                                 <br>
                                 <div>
-                                    <p class="mb-0">Something strange? <a th:href="@{/index}"
-                                                                          class="text-black-50 fw-bold">Go back</a>
-                                    </p>
+                                    <a th:href="@{/index}" class="text-black-50 fw-bold" th:text="#{login.back}"></a>
                                 </div>
 
                         </div>

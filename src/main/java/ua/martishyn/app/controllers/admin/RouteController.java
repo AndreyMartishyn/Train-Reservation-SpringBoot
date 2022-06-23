@@ -6,10 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.martishyn.app.entities.Train;
 import ua.martishyn.app.models.route.RouteDTO;
 import ua.martishyn.app.models.route.RoutePointDTO;
 import ua.martishyn.app.service.RouteService;
 import ua.martishyn.app.service.StationService;
+import ua.martishyn.app.service.TrainService;
 import ua.martishyn.app.utils.constants.ControllerConstants;
 
 import javax.validation.Valid;
@@ -21,12 +23,15 @@ import java.util.List;
 public class RouteController {
     private final RouteService routeService;
     private final StationService stationService;
+    private final TrainService trainService;
 
     @Autowired
     public RouteController(RouteService routeService,
-                           StationService stationService) {
+                           StationService stationService,
+                           TrainService trainService) {
         this.routeService = routeService;
         this.stationService = stationService;
+        this.trainService = trainService;
     }
 
     @GetMapping("/admin/routes")
@@ -52,7 +57,9 @@ public class RouteController {
     }
 
     @GetMapping("/admin/routes/add-new-route")
-    public String showAddNewRouteForm(@ModelAttribute("newRoute") RouteDTO routeDTO) {
+    public String showAddNewRouteForm(@ModelAttribute("newRoute") RouteDTO routeDTO,
+                                      Model model) {
+        model.addAttribute("trains",trainService.getAllTrains());
         return ControllerConstants.ROUTE_ADD_PAGE;
     }
 

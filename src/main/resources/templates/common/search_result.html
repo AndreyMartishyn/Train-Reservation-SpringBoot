@@ -12,12 +12,12 @@
             <table class="table table-sm table-bordered align-middle mb-0 bg-white">
                 <thead>
                 <tr>
-                    <th scope="col">Train</th>
-                    <th scope="col">From/To</th>
-                    <th scope="col">Schedule</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col">Seats available</th>
-                    <th scope="col">Price(UAH)</th>
+                    <th scope="col" th:text="#{booking.found.train}"></th>
+                    <th scope="col" th:text="#{booking.found.direction}"></th>
+                    <th scope="col" th:text="#{booking.found.schedule}"></th>
+                    <th scope="col" th:text="#{booking.found.duration}"></th>
+                    <th scope="col"th:text="#{booking.found.seats}"></th>
+                    <th scope="col" th:text="#{booking.found.price}"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,9 +57,9 @@
                         </span>
                         <span th:unless="${matchingRoute.seatsDetails.firstClassSeats !=0}">
                             F1
-                            <p th:text="${matchingRoute.seatsDetails.firstClassSeats} + ' Places'"/>
+                            <p th:text="${matchingRoute.seatsDetails.firstClassSeats} + ' ' +  #{booking.found.seats-present}"/>
 
-                            <button type="button" class="btn btn-dark" disabled> <i class="fas fa-check"></i></i></button>
+                            <button type="button" class="btn btn-dark" disabled> <i class="fas fa-check"></i></button>
                         </span>
                         <br>
                         <span th:if="${matchingRoute.seatsDetails.secondClassSeats != 0}">
@@ -79,7 +79,7 @@
                         </span>
                     <span th:unless="${matchingRoute.seatsDetails.secondClassSeats !=0}">
                             S2
-                            <p th:text="${matchingRoute.seatsDetails.firstClassSeats} + ' Places'"/>
+                            <p th:text="${matchingRoute.seatsDetails.secondClassSeats} + ' ' +  #{booking.found.seats-present}"/>
 
                             <button type="button" class="btn btn-dark" disabled> <i class="fas fa-check"></i></button>
                         </span>

@@ -12,23 +12,23 @@
             <table class="table table-sm table-bordered align-middle mb-0 bg-white">
                 <thead>
                 <tr>
-                    <th scope="col">Ticket number</th>
-                    <th scope="col">First name</th>
-                    <th scope="col">Last name</th>
-                    <th scope="col">From/To</th>
-                    <th scope="col">Schedule</th>
-                    <th scope="col">Wagon</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col">Comfort type</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Price(UAH)</th>
-                    <th scope="col">Information</th>
+                    <th scope="col" th:text="#{ticket.train}"></th>
+                    <th scope="col" th:text="#{about.first.name}"></th>
+                    <th scope="col" th:text="#{about.last.name}"></th>
+                    <th scope="col" th:text="#{booking.found.direction}"></th>
+                    <th scope="col" th:text="#{booking.found.schedule}"></th>
+                    <th scope="col" th:text="#{ticket.wagon}"></th>
+                    <th scope="col" th:text="#{booking.found.duration}"></th>
+                    <th scope="col" th:text="#{ticket.type}"></th>
+                    <th scope="col" th:text="#{ticket.status}"></th>
+                    <th scope="col" th:text="#{booking.found.price}"></th>
+                    <th scope="col" th:text="#{admin.actions}"></th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="ticket : ${tickets}">
-                    <td style="text-align:center" th:text="${ticket.id}"/>
+                    <td style="text-align:center" th:text="${ticket.departure.route.train.id}"/>
                     </td>
                     <td th:text="${ticket.passengerDetails.firstName}"></td>
 
@@ -42,49 +42,50 @@
 
                     <td th:text="${ticket.ticketDetails.duration}"></td>
 
-                    <td th:text="${ticket.ticketDetails.type}"></td>
+                    <td th:text="#{${ticket.ticketDetails.type}}"></td>
 
-                    <td th:text="${ticket.ticketDetails.status}"></td>
+                    <td th:text="#{${ticket.ticketDetails.status}}"></td>
 
 
                     <td th:text="${ticket.ticketDetails.price}"></td>
 
                     <td>
-                    <div th:if="${ticket.ticketDetails.status == T(ua.martishyn.app.utils.enums.TicketStatus).NOT_PAID}">
-                        <!-- POST FORM FOR TICKET PAY-->
-                        <form th:method="POST"
-                              th:action="@{/tickets/show/pay/{id}(id=${ticket.id})}">
-                            <button
-                                    class="btn btn-outline-success"
-                                    type="submit">
-                                <i class="far fa-credit-card fa-4x"></i>
-                            </button>
-                        </form>
-                        <!-- POST FORM FOR TICKET Cancellation-->
-                        <form th:method="POST"
-                              th:action="@{/tickets/show/cancel/{id}(id=${ticket.id})}">
-                            <button
-                                    class="btn btn-outline-danger btn-rounded"
-                                    type="submit">
-                                <i class="far fa-times-circle fa-4x"></i>
-                            </button>
-                        </form>
-                    </div>
-                        <div th:unless="${ticket.ticketDetails.status == T(ua.martishyn.app.utils.enums.TicketStatus).NOT_PAID}">
-                            <!-- TICKET download-->
+                        <div th:if="${ticket.ticketDetails.status == T(ua.martishyn.app.utils.enums.TicketStatus).NOT_PAID}">
+                            <!-- POST FORM FOR TICKET PAY-->
+                            <form th:method="POST"
+                                  th:action="@{/tickets/show/pay/{id}(id=${ticket.id})}">
                                 <button
                                         class="btn btn-outline-success"
                                         type="submit">
-                                    <i class="fas fa-file-download fa-4x"></i>
+                                    <i class="far fa-credit-card fa-4x"></i>
                                 </button>
+                            </form>
+                            <!-- POST FORM FOR TICKET Cancellation-->
+                            <form th:method="POST"
+                                  th:action="@{/tickets/show/cancel/{id}(id=${ticket.id})}">
+                                <button
+                                        class="btn btn-outline-danger btn-rounded"
+                                        type="submit">
+                                    <i class="far fa-times-circle fa-4x"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div th:unless="${ticket.ticketDetails.status == T(ua.martishyn.app.utils.enums.TicketStatus).NOT_PAID}">
+                            <!-- TICKET download-->
+                            <button
+                                    class="btn btn-outline-success"
+                                    type="submit">
+                                <i class="fas fa-file-download fa-4x"></i>
+                            </button>
                         </div>
 
                     </td>
                 </tr>
                 </tbody>
                 <tr>
-                    <td colspan="10"> <span style="text-align: left; color:red; font-family:courier; font-size:79%;">
-				*After you will pay for ticket, you may download it
+                    <td colspan="11"> <span style="text-align: center; color:red; font-family:courier; font-size:79%;"
+                    th:text ="'*' + #{ticket.info}">
+				*
 				</span></td>
                 </tr>
             </table>

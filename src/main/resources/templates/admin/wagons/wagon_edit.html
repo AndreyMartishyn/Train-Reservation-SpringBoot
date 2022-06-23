@@ -13,9 +13,9 @@
             <form action="#" th:action="@{/admin/wagons/{id}/edit(id=${wagon.id})}" th:object="${wagon}" method="POST">
                 <br>
                 <div class="row d-flex justify-content-center">
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-                    </div>
+                     <span style="font-size: 60%; color:red;" th:if="${#fields.hasErrors('*')}">
+                                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                                    </span>
                     <input type="hidden" th:field="*{route}" value="${wagon.route}">
                     <td class="row">
                         <div class="col-md-4">
@@ -33,29 +33,32 @@
 
                                     <div class="form-helper" th:text="#{label.wagon.seats}"></div>
                                     <div class="input-group mb-3">
-                                    <input type="text" class="form-control" th:field="*{numOfSeats}"
-                                           placeholder="Number of available seats" th:errorclass="is-invalid" required>
+                                        <input type="number" class="form-control" th:field="*{numOfSeats}"
+                                               placeholder="Number of available seats" th:errorclass="is-invalid"
+                                               required>
                                     </div>
                                     <div class="form-helper" th:text="#{label.wagon.base-price}"></div>
                                     <div class="input-group mb-3">
-                                    <input type="text" class="form-control" th:field="*{basePrice}"
-                                           placeholder="Basic price for seat" th:errorclass="is-invalid" required>
+                                        <input type="number" class="form-control" th:field="*{basePrice}"
+                                               placeholder="Basic price for seat" th:errorclass="is-invalid" required>
                                     </div>
 
-                                <div align="center">
-                                    <div class="col-4">
-                                        <button type="submit" class="btn btn-success btn-rounded" th:text="#{button.update}">Edit</button>
+                                    <div align="center">
+                                        <div class="col-4">
+                                            <button type="submit" class="btn btn-success btn-rounded"
+                                                    th:text="#{button.update}">Edit
+                                            </button>
+                                        </div>
                                     </div>
+                                    <br>
                                 </div>
-                                <br>
                             </div>
                         </div>
+                    </td>
                 </div>
-                </td>
+            </form>
         </div>
-        </form>
     </div>
-</div>
 </div>
 <!-- Footer Start -->
 <div th:replace="fragments/footer :: footer"></div>

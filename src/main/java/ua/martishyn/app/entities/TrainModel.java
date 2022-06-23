@@ -20,6 +20,6 @@ public class TrainModel implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = false)
     private String model;
 }

@@ -88,7 +88,7 @@ class RouteFinderTest extends RouteFinderTestHelper {
 
         when(routeService.getAllRoutesDTO()).thenReturn(routes);
         Assertions.assertNotNull(routeService.getAllRoutesDTO());
-        MatchingRoute matchingRoute = routeFinderService.makeBooking(1, 2).get(0);
-        Assertions.assertEquals("0:25", matchingRoute.getRoadTime());
+        MatchingRoute matchingRoute = routeFinderService.makeBooking(4, 2).get(0);
+        Assertions.assertEquals("0:15", matchingRoute.getRoadTime());
     }
 }

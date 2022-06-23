@@ -14,9 +14,9 @@
             <form action="#" th:action="@{/admin/wagons/add}" th:object="${newWagon}" method="POST">
                 <br>
                 <div class="row d-flex justify-content-center">
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-                    </div>
+                    <span style="font-size: 60%; color:red;" th:if="${#fields.hasErrors('*')}">
+                                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                                    </span>
                     <td class="row">
                         <div class="col-md-4">
                             <div class="card-transparent ">
@@ -41,13 +41,13 @@
 
                                     <div class="form-helper" th:text="#{label.wagon.seats}"></div>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" th:field="*{numOfSeats}"
+                                        <input type="number" class="form-control" th:field="*{numOfSeats}"
                                                th:errorclass="is-invalid" required>
                                     </div>
 
                                     <div class="form-helper" th:text="#{label.wagon.base-price}"></div>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" th:field="*{basePrice}"
+                                        <input type="number" class="form-control" th:field="*{basePrice}"
                                                th:errorclass="is-invalid" required>
                                     </div>
                                     <div align="center">

@@ -21,10 +21,10 @@ public class Route implements Serializable {
     private Integer routeId;
 
     @OneToOne
-    @JoinColumn(name = "train_id")
+    @JoinColumn(name = "train_id", nullable = false)
     private Train train;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_id")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL,
+    mappedBy = "route")
     private List<RoutePoint> routePoints;
 }

@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.martishyn.app.entities.User;
 import ua.martishyn.app.models.UserDTO;
 import ua.martishyn.app.models.UserRegisterDTO;
@@ -32,6 +33,7 @@ public class UserService {
         this.emailService = emailService;
     }
 
+    @Transactional
     public boolean registerUser(UserRegisterDTO userRegisterDTO) {
         if (checkIfUserExist(userRegisterDTO.getEmail())) {
             return false;
@@ -47,6 +49,7 @@ public class UserService {
         return emailService.sendWelcomeLetter(user);
     }
 
+    @Transactional(readOnly = true)
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -54,11 +57,13 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public UserDTO getUserDtoByEntityId(Integer id) {
         Optional<User> userFromDb = userRepository.findUserById(id);
         return userFromDb.map(this::convertToDto).orElse(null);
     }
 
+    @Transactional
     public boolean updateUserFromDtoData(Integer id, UserDTO userDTO) {
         Optional<User> userById = userRepository.findUserById(id);
         if (!userById.isPresent()) {
@@ -70,6 +75,7 @@ public class UserService {
         return true;
     }
 
+    @Transactional
     public boolean deleteUserById(Integer userId) {
         Optional<User> userById = userRepository.findUserById(userId);
         if (!userById.isPresent()) {

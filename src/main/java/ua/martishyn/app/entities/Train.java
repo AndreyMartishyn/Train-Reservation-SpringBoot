@@ -20,7 +20,7 @@ public class Train implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "model_id")
+    @OneToOne
+    @JoinColumn(name = "model_id" ,nullable = false)
     private TrainModel model;
 }

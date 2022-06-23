@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +18,12 @@ import java.util.List;
 @Builder
 public class RouteDTO {
 
-    @NotNull
-    @Min(value = 1, message = "must be equal or greater than 1")
-    @Max(value = 999, message = "must be equal or less than 999")
+    @NotNull(message = "{route.id.notnull}")
+    @Min(value = 1, message = "{route.id.min}")
+    @Max(value = 999, message = "{route.id.max}")
     private Integer id;
 
-    @NotNull
-    @Min(value = 1, message = "must be equal or greater than 1")
-    @Max(value = 99, message = "must be equal or less than 999")
+    @NotNull()
     private Integer trainId;
 
     @Builder.Default

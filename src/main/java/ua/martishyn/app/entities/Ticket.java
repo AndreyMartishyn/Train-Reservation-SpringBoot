@@ -5,34 +5,37 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "ticket")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ticket {
+public class Ticket implements Serializable {
+    private static final long serialVersionUID = -3867602400461722257L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "departure_id")
+    @JoinColumn(name = "departure_id", nullable = false)
     private RoutePoint departure;
 
     @OneToOne
-    @JoinColumn(name = "arrival_id")
+    @JoinColumn(name = "arrival_id", nullable = false)
     private RoutePoint arrival;
 
-    @ManyToOne
-    @JoinColumn(name = "passenger_id")
+    @OneToOne
+    @JoinColumn(name = "passenger_id", nullable = false)
     private PassengerDetails passengerDetails;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_details")
+    @OneToOne
+    @JoinColumn(name = "ticket_details", nullable = false)
     private TicketDetails ticketDetails;
 }

@@ -20,10 +20,10 @@ public class Station implements Serializable{
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "code")
+    @Column(name = "code", nullable = false)
     private String code;
 
 }
