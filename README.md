@@ -63,19 +63,19 @@ Independent features:
 
 ## Workflow
 
-Main Page
+- Main Page
 <p align="center">
-<img src="./readme_assets/main.png" width="60%">
+<img src="./readme_assets/main.png" width="90%">
 </p>
 
-Registration Page with front-back validation
+- Registration Page with front-back validation
 <p align="center">
-<img src="./readme_assets/registration.png" width="60%">
+<img src="./readme_assets/registration-validation.png" width="90%">
 </p>
 
-Login Page with front-back validation
+- Login Page with front-back validation
 <p align="center">
-<img src="./readme_assets/login.png" width="60%">
+<img src="./readme_assets/login.png" width="90%">
 </p>
 
 
