@@ -15,6 +15,23 @@
 
 Self-study project. You can check booking for certain route and buy ticket. Admin may change some parts of the route details.
 
+## Technologies
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://openjdk.org/)
+[![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/)
+[![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![JUnit5](https://img.shields.io/badge/Junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white)](https://junit.org/junit5/docs/current/user-guide/)
+[![BootStrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://mdbootstrap.com/)
+
+- Java 8+
+- Spring Boot + Spring Data
+- Spring Security
+- MySQL relational database
+- Embedded Tomcat within Spring Boot
+- Junit 5 + Mockito Api
+- Sl4f logging aspect
+- Maven as building project tool
+- BootStrap + Thymeleaf + HTML + CSS
+
 ## Functionality
 
 In project 2 roles are defined : Admin, Customer. Default data from database is admin credentials and train entity.
@@ -43,23 +60,6 @@ Independent features:
 - email is send when to user when following actions made: registration, booking, paying, or cancelling ticket
 - 2 languages (UA/ENG)
 - input data validation
-
-## Technologies 
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://openjdk.org/)
-[![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/)
-[![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![JUnit5](https://img.shields.io/badge/Junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white)](https://junit.org/junit5/docs/current/user-guide/)
-[![BootStrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://mdbootstrap.com/)
-
-- Java 8+ 
-- Spring Boot + Spring Data
-- Spring Security
-- MySQL relational database 
-- Embedded Tomcat within Spring Boot
-- Junit 5 + Mockito Api
-- Sl4f logging aspect
-- Maven as building project tool
-- BootStrap + Thymeleaf + HTML + CSS
 
 ## Workflow
 

@@ -11,6 +11,7 @@ import ua.martishyn.app.repositories.TicketRepository;
 import ua.martishyn.app.service.helpers.TicketHelper;
 import ua.martishyn.app.utils.enums.TicketStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -61,6 +62,7 @@ public class TicketService {
         Ticket newTicket = ticketHelper.createTicketBase(user, departureStation, arrivalStation);
         newTicket.setTicketDetails(createTicketDetails(bookingData));
         newTicket.setPassengerDetails(createPassengerDetails(bookingData));
+        newTicket.setCreatedAt(LocalDateTime.now());
         ticketRepository.save(newTicket);
         emailService.sendBookingNotification(user);
     }

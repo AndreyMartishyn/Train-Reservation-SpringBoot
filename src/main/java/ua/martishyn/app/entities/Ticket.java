@@ -3,9 +3,12 @@ package ua.martishyn.app.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ticket")
@@ -38,4 +41,7 @@ public class Ticket implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn( name = "ticket_details", nullable = false)
     private TicketDetails ticketDetails;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 }

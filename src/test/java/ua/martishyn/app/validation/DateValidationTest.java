@@ -39,16 +39,16 @@ class DateValidationTest {
 
     @Test
     void shouldReturnFalseWhenDepartureDateIsBeforeArrivalDate() {
-        routePointDTO.setDeparture(LocalDateTime.parse("2022-07-07T10:01:00"));
-        routePointDTO.setArrival(LocalDateTime.parse("2022-07-07T10:02:00"));
+        routePointDTO.setDeparture(LocalDateTime.parse("2022-08-08T10:01:00"));
+        routePointDTO.setArrival(LocalDateTime.parse("2022-08-08T10:02:00"));
         Set<ConstraintViolation<RoutePointDTO>> violationList = validator.validate(routePointDTO);
         Assertions.assertFalse(violationList.isEmpty());
     }
 
     @Test
     void shouldReturnTrueWhenDepartureDateIsAfterArrivalDate() {
-        routePointDTO.setDeparture(LocalDateTime.parse("2022-07-07T10:03:00"));
-        routePointDTO.setArrival(LocalDateTime.parse("2022-07-07T10:02:00"));
+        routePointDTO.setDeparture(LocalDateTime.parse("2022-08-08T10:03:00"));
+        routePointDTO.setArrival(LocalDateTime.parse("2022-08-08T10:02:00"));
         Set<ConstraintViolation<RoutePointDTO>> violationList = validator.validate(routePointDTO);
         Assertions.assertTrue(violationList.isEmpty());
     }
