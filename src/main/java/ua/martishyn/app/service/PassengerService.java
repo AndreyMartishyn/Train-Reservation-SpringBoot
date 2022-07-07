@@ -16,7 +16,7 @@ public class PassengerService {
     }
 
     @Transactional
-    public PassengerDetails saveNewPassenger(PassengerDetails passengerDetails){
+    public PassengerDetails saveNewPassenger(PassengerDetails passengerDetails) {
         return passengerRepository.save(passengerDetails);
     }
 }

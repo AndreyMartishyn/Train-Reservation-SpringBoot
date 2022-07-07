@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
@@ -21,8 +22,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class WagonServiceTest {
@@ -47,7 +49,7 @@ class WagonServiceTest {
                 .id(1)
                 .route(111)
                 .type(Type.SECOND)
-                .numOfSeats(5)
+                .numOfSeats(1)
                 .basePrice(20)
                 .build());
         wagonDTOList.add(WagonDTO.builder()
@@ -83,7 +85,7 @@ class WagonServiceTest {
     @Test
     void shouldGetNumberOfPlacesForCertainTypeWagon() {
         int placesQuantity = wagonService.getClassPlaces(wagonDTOList, Type.SECOND);
-        Assertions.assertEquals(15, placesQuantity);
+        Assertions.assertEquals(11, placesQuantity);
     }
 
     @Test
@@ -98,4 +100,43 @@ class WagonServiceTest {
         Assertions.assertEquals(60, placePrice);
     }
 
+    @Test
+    void shouldReturnTrueWagonBookedWagonHasMoreThanZeroPlaces(){
+        Wagon wagon = new Wagon();
+        wagon.setId(1);
+        wagon.setNumOfSeats(1);
+        when(wagonRepository.getById(anyInt())).thenReturn(wagon);
+        boolean result = wagonService.checkForAvailablePlaceAndBook(1);
+        Assertions.assertEquals(0, wagon.getNumOfSeats());
+        Assertions.assertTrue(result);
+
+    }
+    @Test
+    void shouldReturnFalseWhenBookedWagonHasNoFreePlaces(){
+        Wagon wagon = new Wagon();
+        wagon.setId(1);
+        wagon.setNumOfSeats(0);
+        when(wagonRepository.getById(anyInt())).thenReturn(wagon);
+        boolean result = wagonService.checkForAvailablePlaceAndBook(1);
+        Assertions.assertEquals(0, wagon.getNumOfSeats());
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void shouldIncrementAvailableSeatsNumberWhenBookingCancelled(){
+        Wagon wagon = new Wagon();
+        wagon.setId(1);
+        wagon.setNumOfSeats(0);
+        when(wagonRepository.getById(anyInt())).thenReturn(wagon);
+        when(wagonRepository.save(any())).thenReturn(any());
+        wagonService.replenishPlaceAfterCancelling(1);
+        Assertions.assertEquals(1, wagon.getNumOfSeats());
+    }
+
+    @Test
+    void whenDeleteWagonIsVerifiedCall(){
+        doNothing().when(wagonRepository).deleteById(any());
+        wagonService.deleteWagon(any());
+        verify(wagonRepository, times(1)).deleteById(any());
+    }
 }

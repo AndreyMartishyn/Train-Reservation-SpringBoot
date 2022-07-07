@@ -27,4 +27,8 @@ public class Route implements Serializable {
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL,
     mappedBy = "route")
     private List<RoutePoint> routePoints;
+
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL,
+            mappedBy = "route")
+    private List<Wagon> wagons;
 }

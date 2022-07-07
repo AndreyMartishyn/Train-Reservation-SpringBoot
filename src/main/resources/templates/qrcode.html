@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1 style="text-align: center;" th:text="#{booking.qr.header}"></h1>
+
+<div align="center" style="width:100%;display: inline-block ">
+  <img th:src="${'data:image/png;base64,' + qrcode}" alt="" height="250" width="250">
+  <br>
+  <a th:href="@{/tickets/show/pdf/{data}(data=${data})}" th:text="#{booking.qr.download}"></a>
+  <br>
+  <br>
+  <a th:href="@{/index}" th:text="#{nav.home}"></a>
+</div>
+
+
+</body>
+</html>

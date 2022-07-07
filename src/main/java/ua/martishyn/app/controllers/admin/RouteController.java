@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping()
+@RequestMapping
 @Slf4j
 public class RouteController {
     private final RouteService routeService;
@@ -110,7 +110,7 @@ public class RouteController {
 
     @PostMapping("/admin/routes/edit-point")
     public String updateRoutePoint(@ModelAttribute("routePoint") @Valid RoutePointDTO routePointDTO,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return ControllerConstants.ROUTE_POINT_EDIT_PAGE;
         }

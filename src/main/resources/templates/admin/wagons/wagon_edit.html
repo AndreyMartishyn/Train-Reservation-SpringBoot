@@ -13,7 +13,7 @@
             <form action="#" th:action="@{/admin/wagons/{id}/edit(id=${wagon.id})}" th:object="${wagon}" method="POST">
                 <br>
                 <div class="row d-flex justify-content-center">
-                     <span style="font-size: 60%; color:red;" th:if="${#fields.hasErrors('*')}">
+                     <span style="font-size: 60%; color:yellow;" th:if="${#fields.hasErrors('*')}">
                                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                                     </span>
                     <input type="hidden" th:field="*{route}" value="${wagon.route}">

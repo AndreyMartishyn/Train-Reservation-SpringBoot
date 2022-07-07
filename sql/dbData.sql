@@ -16,7 +16,7 @@ INSERT INTO station (name, code) VALUES
 ("Lviv-South", "LVV"),
 ("Brody-Central", "BDY"),
 ("Kryvyn-South", "KVN"),
-("Shepetivka-Sout", "SPK"),
+("Shepetivka-South", "SPK"),
 ("Kyiv-Pas", "KVP");
 
 

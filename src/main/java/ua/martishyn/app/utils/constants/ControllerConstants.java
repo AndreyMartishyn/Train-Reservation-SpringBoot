@@ -24,7 +24,7 @@ public class ControllerConstants {
     /**
      * Station controller constants
      */
-    public static final String STATION_REDIRECT = "redirect:/admin/stations";
+    public static final String STATION_REDIRECT = "redirect:/admin/stations/all";
     public static final String STATION_LIST = "/admin/stations/station_list";
     public static final String STATION_ADD_PAGE = "/admin/stations/station_add";
     public static final String STATION_EDIT_PAGE = "/admin/stations/station_edit";
@@ -42,5 +42,6 @@ public class ControllerConstants {
      */
     public static final String INDEX_PAGE = "/index";
     public static final String INDEX_PAGE_REDIRECT = "redirect:/index";
+    public static final String ORDER_LIST = "/admin/orders/orders_admin";
 
 }

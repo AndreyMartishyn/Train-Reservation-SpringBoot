@@ -20,7 +20,7 @@ public class Ticket implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToOne
@@ -31,11 +31,11 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "arrival_id", nullable = false)
     private RoutePoint arrival;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "passenger_id", nullable = false)
     private PassengerDetails passengerDetails;
 
-    @OneToOne
-    @JoinColumn(name = "ticket_details", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn( name = "ticket_details", nullable = false)
     private TicketDetails ticketDetails;
 }

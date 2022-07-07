@@ -36,7 +36,7 @@ public class User implements Serializable {
     @Transient
     private String passwordConfirm;
 
-    @Column(name = "email" , nullable = false, unique = true)
+    @Column(name = "email" , nullable = false, unique = true, length = 255)
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -44,8 +44,8 @@ public class User implements Serializable {
     private Role role;
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL,
-    mappedBy = "user")
+            mappedBy = "user")
     private List<Ticket> tickets;
 
-}
+  }
 

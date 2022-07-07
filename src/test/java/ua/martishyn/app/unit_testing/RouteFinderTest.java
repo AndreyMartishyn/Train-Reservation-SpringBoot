@@ -91,4 +91,9 @@ class RouteFinderTest extends RouteFinderTestHelper {
         MatchingRoute matchingRoute = routeFinderService.makeBooking(4, 2).get(0);
         Assertions.assertEquals("0:15", matchingRoute.getRoadTime());
     }
+
+    @Test
+    void shouldReturnTrueIfStationsAreSame() {
+        Assertions.assertTrue(routeFinderService.areStationsSame(1, 1));
+    }
 }

@@ -27,7 +27,7 @@
                                     <div class="input-group mb-3">
                                 <select class="form-select" th:field="*{station.id}" id="dropDownList" required>
                                     <option th:each="stationObj : ${stationList}" th:value="${stationObj.id}"
-                                            th:text="${stationObj.name}"></option>
+                                            th:text="#{${stationObj.name}}"></option>
                                 </select>
                             </div>
                                     <div class="form-helper" th:text="#{admin.route.departure}"></div>

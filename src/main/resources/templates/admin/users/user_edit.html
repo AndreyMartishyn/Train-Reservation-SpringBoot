@@ -12,7 +12,7 @@
         <form action="#" th:action="@{/users/admin/{id}/edit(id=${user.id})}" th:object="${user}" method="POST">
             <br>
             <div class="row d-flex justify-content-center">
-                 <span style="font-size: 60%; color:red;" th:if="${#fields.hasErrors('*')}">
+                 <span style="font-size: 60%; color:yellow;" th:if="${#fields.hasErrors('*')}">
                                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                                     </span>
                 <td class="row">
@@ -37,14 +37,14 @@
                                 <div class="form-helper" th:text="#{label.user.email}"></div>
                                 <div class="input-group mb-3">
                                     <input type="email" class="form-control" th:field="*{email}" placeholder="Email"
-                                           th:errorclass="is-invalid" required>
+                                    pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  th:errorclass="is-invalid" required>
                                 </div>
 
                                 <div class="form-helper" th:text="#{label.user.role}"></div>
                                 <select class="form-select" th:field="*{role}">
                                     <option th:each="role : ${T(ua.martishyn.app.utils.enums.Role).values()}"
                                             th:value="${role}"
-                                            th:text="${role}">
+                                            th:text="#{${role}}">
                                     </option>
                                 </select>
                                 <br>

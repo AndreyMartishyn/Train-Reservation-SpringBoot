@@ -23,7 +23,7 @@
                         <select class="form-select mr-sm-2" name="stationFrom" required>
                             <option value="" th:text="#{select.departure}"></option>
                             <option th:each="station : ${stations}" th:value="${station.id}"
-                                    th:text="${station.name}"></option>
+                                    th:text="#{${station.name}}"></option>
                         </select>
                     </div>
                     </p>
@@ -32,14 +32,21 @@
                         <select class="form-select mr-sm-2" name="stationTo" required>
                             <option value="" th:text="#{select.arrival}"></option>
                             <option th:each="station : ${stations}" th:value="${station.id}"
-                                    th:text="${station.name}"></option>
+                                    th:text="#{${station.name}}"></option>
                         </select>
                     </div>
                     </p>
                     <div align="center">
-                    <p th:if="${sameStations}" class="error">Chosen station are same</p>
-                    <p th:if="${noStations}" class="error">There are no routes for your stations</p>
-                    <button type="submit" class="btn btn-success btn-rounded" value="Search"><i class="fas fa-search"></i></button>
+                    <p th:if="${sameStations}" class="error" th:text="#{same.stations}"></p>
+                    <p th:if="${noRoutes}" class="error" th:text="#{no.routes}"></p>
+                    <p th:if="${noStations}" class="error" th:text="#{no.stations}"></p>
+
+                        <div th:if="${noStations != null}">
+                        <button type="submit" class="btn btn-success btn-rounded" value="Search" disabled><i class="fas fa-search"></i></button>
+                        </div>
+                        <div th:unless="${noStations != null}">
+                            <button type="submit" class="btn btn-success btn-rounded" value="Search" ><i class="fas fa-search"></i></button>
+                        </div>
                     </div>
                 </div>
 

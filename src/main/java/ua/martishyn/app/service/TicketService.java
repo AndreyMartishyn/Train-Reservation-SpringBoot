@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.martishyn.app.entities.*;
-import ua.martishyn.app.models.WagonDTO;
 import ua.martishyn.app.models.booking.BookingData;
 import ua.martishyn.app.repositories.RoutePointRepository;
 import ua.martishyn.app.repositories.TicketDetailsRepository;
@@ -45,50 +44,55 @@ public class TicketService {
         return ticketRepository.findAllByUser(user);
     }
 
+    @Transactional(readOnly = true)
+    public List<Ticket> getAllTickets(){
+        return ticketRepository.findAll();
+    }
+
+    public Ticket getTicketByItsId(Integer id) {
+        return ticketRepository.getById(id);
+    }
+
     //TODO: DTO TICKET AND REFACTOR
     @Transactional
     public void createTicketFromUserData(BookingData bookingData, User user) {
         RoutePoint departureStation = routePointRepository.getById(bookingData.getFrom());
         RoutePoint arrivalStation = routePointRepository.getById(bookingData.getTo());
-        Ticket newTicket = ticketHelper.createTicketFromData(user, departureStation, arrivalStation);
+        Ticket newTicket = ticketHelper.createTicketBase(user, departureStation, arrivalStation);
         newTicket.setTicketDetails(createTicketDetails(bookingData));
-        newTicket.setPassengerDetails(getPassengerFromData(bookingData));
-        newTicket.setTicketDetails(createTicketDetails(bookingData));
+        newTicket.setPassengerDetails(createPassengerDetails(bookingData));
         ticketRepository.save(newTicket);
         emailService.sendBookingNotification(user);
     }
 
     @Transactional
-    private TicketDetails createTicketDetails(BookingData bookingData) {
+    public TicketDetails createTicketDetails(BookingData bookingData) {
         TicketDetails ticketDetails = ticketHelper.createTicketDetails(bookingData);
         return ticketDetailsRepository.save(ticketDetails);
     }
 
     @Transactional
-    private PassengerDetails getPassengerFromData(BookingData bookingData) {
-        PassengerDetails passengerDetails = ticketHelper.getPassengerDetails(bookingData);
+    public PassengerDetails createPassengerDetails(BookingData bookingData) {
+        PassengerDetails passengerDetails = ticketHelper.createPassengerDetails(bookingData);
         return passengerService.saveNewPassenger(passengerDetails);
     }
 
     @Transactional
-    public boolean payForTicket(Integer id, User user) {
+    public void payForTicket(Integer id, User user) {
         //implement working with users balance. Reason of boolean return type
         Ticket ticketFromDb = ticketRepository.getById(id);
         ticketFromDb.getTicketDetails().setStatus(TicketStatus.PAID);
         ticketRepository.save(ticketFromDb);
         emailService.sendOrderPayedConfirmation(user);
-        return true;
     }
 
     @Transactional
-    public boolean cancelBooking(Integer id, User user) {
-        //implement replenish of occupied place. Reason of boolean return type
+    public void cancelBooking(Integer id, User user) {
         Ticket ticketFromDB
                 = ticketRepository.getById(id);
         Integer numOfBookedWagon = ticketFromDB.getTicketDetails().getWagonNum();
         wagonService.replenishPlaceAfterCancelling(numOfBookedWagon);
         ticketRepository.delete(ticketRepository.getById(id));
         emailService.sendBookingCancellation(user);
-        return true;
     }
 }

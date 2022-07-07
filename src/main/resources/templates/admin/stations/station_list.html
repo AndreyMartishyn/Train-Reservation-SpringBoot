@@ -24,7 +24,7 @@
                 </tr>
                 <tr th:each="station : ${stationsDto}">
                     <td><span th:text="${station.id}"></span></td>
-                    <td><span th:text="${station.name}"></span></td>
+                    <td><span th:text="#{${station.name}}"></span></td>
                     <td><span th:text="${station.code}"></span></td>
                     <td>
                         <form th:method="GET" action="#" th:action="@{/admin/stations/{id}/edit(id=${station.id})}">
@@ -41,7 +41,8 @@
                 </tbody>
             </table>
             <br>
-            <!--Pagination start -->
+            <div th:if="${totalPages != null}">
+                <!--Pagination start -->
             <nav class="blog-pagination justify-content-center d-flex">
                 <ul class="pagination">
                     <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
@@ -62,6 +63,7 @@
                     </th:block>
                 </ul>
             </nav>
+            </div>
             <!--Pagination end -->
             <form th:method="GET" action="#" th:action="@{/admin/stations/add}">
                 <button class="btn btn-success btn-rounded" type="submit" th:text="#{button.add.station}"></button>

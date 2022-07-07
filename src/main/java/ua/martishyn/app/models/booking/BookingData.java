@@ -2,23 +2,26 @@ package ua.martishyn.app.models.booking;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class BookingData {
     private Integer route;
-    @NotEmpty
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{1,16}$",
-            message = "First name should be from 1 to 16 letters cyrillic/latin")
+
+    @NotBlank(message = "{user.lastname.notblank}")
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{4,16}$",
+            message = "{user.firstname.pattern}")
     private String firstName;
 
-    @NotEmpty
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{1,16}$",
-            message = "First name should be from 1 to 16 letters cyrillic/latin")
+    @NotBlank(message = "{user.lastname.notblank}")
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{4,16}$",
+            message = "{user.lastname.pattern}")
     private String lastName;
 
     @NotNull

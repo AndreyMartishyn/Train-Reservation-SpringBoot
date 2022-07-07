@@ -26,7 +26,7 @@ public class StationController {
 
 
     @GetMapping("/all")
-    public String findPaginatedStation(@RequestParam(defaultValue = "1") int currentPage,
+    public String findPaginatedStation(@RequestParam(defaultValue = "1", required = false) int currentPage,
                                 Model model) {
         int pageSize = 2;
         List<StationDTO> allStationsDtoPaginated = stationService.getAllStationsDtoPaginated(currentPage - 1, pageSize);

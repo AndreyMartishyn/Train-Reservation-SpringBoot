@@ -14,7 +14,7 @@ public class StationDTO {
     private Integer id;
 
     @NotBlank(message = "{station.name.notblank}")
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff\\-]{4,16}$",
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff\\-]{4,20}$",
             message = "{station.name.pattern}")
     private String name;
 

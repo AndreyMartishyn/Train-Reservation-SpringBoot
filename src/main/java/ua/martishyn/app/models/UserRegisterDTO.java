@@ -8,14 +8,14 @@ import ua.martishyn.app.utils.validation.passwords_match.PasswordFieldMatch;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @PasswordFieldMatch(field = "password",
-        fieldMatch = "verifyPassword")
+        fieldMatch = "verifyPassword",
+message = "{user.password.mismatch}")
 @Builder
 public class UserRegisterDTO {
 
@@ -26,7 +26,7 @@ public class UserRegisterDTO {
 
     @NotBlank(message = "{user.lastname.notblank}")
     @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{1,16}$",
-            message = "user.lastname.pattern")
+            message = "{user.lastname.pattern}")
     private String lastName;
 
     @NotBlank(message = "{user.password.notblank}")

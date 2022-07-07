@@ -22,7 +22,7 @@
                 </thead>
                 <tbody>
                 <tr th:if="${noWagons}">
-                    <td colspan="5" th th:text="#{admin.no.wagons.found}"></td>
+                    <td colspan="6" th th:text="#{admin.no.wagons.found}"></td>
                 </tr>
                 <tr th:each="wagon: ${wagonsList}">
                     <td><span th:text="${wagon.id}"> Wagon Id </span></td>

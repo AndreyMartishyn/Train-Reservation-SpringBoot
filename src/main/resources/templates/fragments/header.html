@@ -223,6 +223,10 @@
                                                 th:href="@{/users/admin/all}"
                                                 th:text="#{nav.admin.users}"></a>
                         </li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                th:href="@{/admin/orders}"
+                                                th:text="#{nav.admin.orders}"></a>
+                        </li>
                     </ul>
                 </div>
                 <a th:href="@{/?lang=en}"><i class="flag flag-united-kingdom"></i></a>
@@ -253,10 +257,6 @@
                             class="dropdown-menu dropdown-menu-end"
                             aria-labelledby="navbarDropdownMenuAvatar"
                     >
-                        <li>
-                            <a class="dropdown-item" th:href="@{/users/about}" th:text="#{nav.user.about}"
-                            ></a>
-                        </li>
                         <li>
                             <a class="dropdown-item" th:href="@{/logout}" th:text="#{nav.user.logout}"></a>
                         </li>

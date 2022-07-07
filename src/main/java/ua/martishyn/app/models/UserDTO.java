@@ -8,6 +8,7 @@ import ua.martishyn.app.utils.enums.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
@@ -32,5 +33,6 @@ public class UserDTO {
     @Email(message = "{user.email.notcorrect}")
     private String email;
 
+    @NotNull
     private Role role;
 }

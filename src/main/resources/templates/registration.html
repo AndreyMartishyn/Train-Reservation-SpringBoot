@@ -3,108 +3,120 @@
 <div th:replace="fragments/head :: head"></div>
 
 <body>
-<div   class="p-5 text-center bg-image"
-       style="background-image: url('/images/background.jpg');
+<div class="p-5 text-center bg-image"
+     style="background-image: url('/images/background.jpg');
       height: 1000px;">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px;">
-                    <div class="card-body p-md-3">
-                        <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-3">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" th:text="#{login.header}"></p>
-                                <form class="mx-1 mx-md-4" action="#" th:action="@{/register}" th:object="${user}"
-                                      method="post">
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"
+                                       th:text="#{register.header}"></p>
+                                    <form class="mx-1 mx-md-4" action="#" th:action="@{/register}" th:object="${user}"
+                                          method="post">
                                     <span style="font-size: 60%; color:red;" th:if="${#fields.hasErrors('*')}">
                                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                                     </span>
+                                        <p style="color:red" th:if="${registrationError}" class="error"
+                                           th:text="#{register.not.correct}"></p>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="form3Example1c" class="form-control"
-                                                   th:field="*{firstName}"
-                                                   th:errorclass="is-invalid"/>
-                                            <label class="form-label" for="form3Example1c" th:text="#{label.register.first}"></label>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="text" id="form3Example1c" class="form-control"
+                                                       th:field="*{firstName}"
+                                                       th:errorclass="is-invalid"/>
+                                                <label class="form-label" for="form3Example1c"
+                                                       th:text="#{label.register.first}"></label>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="form3Example2c" class="form-control"
-                                                   th:field="*{lastName}"
-                                                   th:errorclass="is-invalid">
-                                            <label class="form-label" for="form3Example1c" th:text="#{label.register.last}"></label>
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="text" id="form3Example2c" class="form-control"
+                                                       th:field="*{lastName}"
+                                                       th:errorclass="is-invalid">
+                                                <label class="form-label" for="form3Example1c"
+                                                       th:text="#{label.register.last}"></label>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="form3Example3c" class="form-control"
-                                                   th:field="*{email}" th:errorclass="is-invalid">
-                                            <label class="form-label" for="form3Example3c" th:text="#{label.login.email}"></label>
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="email" id="form3Example3c" class="form-control"
+                                                       th:field="*{email}" th:errorclass="is-invalid">
+                                                <label class="form-label" for="form3Example3c"
+                                                       th:text="#{label.login.email}"></label>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control"
-                                                   th:field="*{password}"
-                                                   th:errorclass="is-invalid">
-                                            <label class="form-label" for="form3Example4c" th:text="#{label.login.password}"></label>
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="password" id="form3Example4c" class="form-control"
+                                                       th:field="*{password}"
+                                                       th:errorclass="is-invalid">
+                                                <label class="form-label" for="form3Example4c"
+                                                       th:text="#{label.login.password}"></label>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4cd" class="form-control"
-                                                   th:field="*{verifyPassword}"
-                                                   th:errorclass="is-invalid">
-                                            <label class="form-label" for="form3Example4cd" th:text="#{label.register.repeat.pass}"></label>
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="password" id="form3Example4cd" class="form-control"
+                                                       th:field="*{verifyPassword}"
+                                                       th:errorclass="is-invalid">
+                                                <label class="form-label" for="form3Example4cd"
+                                                       th:text="#{label.register.repeat.pass}"></label>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2" type="checkbox" value=""
-                                               id="form2Example3c"/>
-                                        <label class="form-check-label" for="form2Example3c" th:text="#{register.rules}  + ' ' + #{register.terms}">
-                                        </label>
-                                    </div>
+                                        <div class="form-check d-flex justify-content-center mb-5">
+                                            <input class="form-check-input me-2" type="checkbox" value=""
+                                                   id="form2Example3c" required/>
+                                            <label class="form-check-label" for="form2Example3c"
+                                                   th:text="#{register.rules}  + ' ' + #{register.terms}">
+                                            </label>
+                                        </div>
 
-                                    <div align="center">
+                                        <div align="center">
 
-                                        <a th:href="@{/login}" class="text-black-50 fw-bold" th:text="#{register.already.exist}">
-                                        </a>
-                                    </div>
+                                            <a th:href="@{/login}" class="text-black-50 fw-bold"
+                                               th:text="#{register.already.exist}">
+                                            </a>
+                                        </div>
 
 
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="submit" class="btn btn-dark btn-lg" th:text="#{register.post}"></button>
-                                    </div>
+                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                            <button type="submit" class="btn btn-dark btn-lg"
+                                                    th:text="#{register.post}"></button>
+                                        </div>
 
-                                </form>
-                            </div>
-                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                                    </form>
+                                </div>
+                                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                <img src=""
-                                      th:src="@{/images/local_railway.png}" height="80"
-                                     class="img-fluid" alt="Sample image">
+                                    <img src=""
+                                         th:src="@{/images/local_railway.png}" height="80"
+                                         class="img-fluid" alt="Sample image">
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+        </section>
     </div>
 </div>
 </div>

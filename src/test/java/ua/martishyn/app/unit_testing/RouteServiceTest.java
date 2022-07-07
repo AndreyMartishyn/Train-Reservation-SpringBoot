@@ -1,34 +1,30 @@
 package ua.martishyn.app.unit_testing;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.util.Assert;
 import ua.martishyn.app.entities.Route;
 import ua.martishyn.app.entities.RoutePoint;
 import ua.martishyn.app.models.route.RouteDTO;
 import ua.martishyn.app.models.route.RoutePointDTO;
 import ua.martishyn.app.repositories.RoutePointRepository;
 import ua.martishyn.app.repositories.RouteRepository;
-import ua.martishyn.app.repositories.TrainRepository;
 import ua.martishyn.app.service.RouteService;
 import ua.martishyn.app.service.TrainService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RouteServiceTest {
@@ -39,7 +35,7 @@ class RouteServiceTest {
     @Mock
     private RoutePointRepository routePointRepository;
 
-    @Spy
+    @Mock
     private TrainService trainService;
 
     @Spy
@@ -92,7 +88,7 @@ class RouteServiceTest {
 
         List<RoutePointDTO> subList = routeService.collectRoutePointsForView(111, 2, 4);
         assertEquals(3, subList.size());
-        Assertions.assertNotNull(subList);
+        assertNotNull(subList);
         assertEquals(subList.get(0).getId(), routePointB.getId());
         assertEquals(subList.get(2).getId(), routePointD.getId());
     }
@@ -118,17 +114,64 @@ class RouteServiceTest {
     }
 
     @Test
-    void shouldGetRoutePointDtoById(){
+    void shouldGetRoutePointDtoById() {
         RoutePoint routePoint = new RoutePoint();
         routePoint.setId(111);
         when(routePointRepository.getById(111)).thenReturn(routePoint);
         RoutePointDTO routePointDtoById = routeService.getRoutePointDtoById(111);
-        Assertions.assertNotNull(routePointDtoById);
-        Assertions.assertEquals(111, routePointDtoById.getId());
+        assertNotNull(routePointDtoById);
+        assertEquals(111, routePointDtoById.getId());
+    }
+
+    @Test
+    void shouldReturnListOfIdsWhenRoutesAreNotEmpty() {
+        Route routeA = new Route();
+        RoutePoint routePoint1 = new RoutePoint();
+        RoutePoint routePoint2 = new RoutePoint();
+        List<RoutePoint> routePointsA = new ArrayList<>();
+        routePointsA.add(routePoint1);
+        routePointsA.add(routePoint2);
+        routeA.setRoutePoints(routePointsA);
+        routeA.setRouteId(1);
+
+        Route routeB = new Route();
+        RoutePoint routePoint3 = new RoutePoint();
+        RoutePoint routePoint4 = new RoutePoint();
+        List<RoutePoint> routePointsB = new ArrayList<>();
+        routePointsB.add(routePoint3);
+        routePointsB.add(routePoint4);
+        routeB.setRoutePoints(routePointsB);
+        routeB.setRouteId(2);
+
+        Route emptyRoute = new Route();
+        emptyRoute.setRouteId(22);
+        emptyRoute.setRoutePoints(new ArrayList<>());
+
+        List<Route> routes = new ArrayList<>();
+        routes.add(routeA);
+        routes.add(routeB);
+        routes.add(emptyRoute);
+        when(routeRepository.findAll()).thenReturn(routes);
+        List<Integer> allNotEmptyRoutesIds = routeService.getAllNotEmptyRoutesIds();
+        assertNotNull(allNotEmptyRoutesIds);
+        assertEquals(2, allNotEmptyRoutesIds.size());
+        assertEquals(1, allNotEmptyRoutesIds.get(0));
+        assertEquals(2, allNotEmptyRoutesIds.get(1));
+    }
+
+    @Test
+    void whenDeleteRouteIsVerifiedCall(){
+        doNothing().when(routeRepository).deleteById(any());
+        routeService.deleteRoute(any());
+        verify(routeRepository, times(1)).deleteById(any());
+    }
+
+    @Test
+    void whenDeleteRoutePointIsVerifiedCall(){
+        doNothing().when(routePointRepository).deleteById(any());
+        routeService.deleteRoutePoint(any());
+        verify(routePointRepository, times(1)).deleteById(any());
     }
 }
 
 
-//public RoutePointDTO getRoutePointDtoById(Integer id) {
-//        return convertRoutePointToDTO(routePointRepository.getById(id));
-//    }

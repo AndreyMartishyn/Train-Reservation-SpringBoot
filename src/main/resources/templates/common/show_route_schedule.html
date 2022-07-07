@@ -8,36 +8,42 @@
      style="background-image: url('/images/background.jpg');
       height: 1000px;">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
-        <div class="opacity-80" align="center" >
-            <div class="col-4 m-4" >
-            <table class="table table-sm table-bordered align-middle mb-0 bg-white responsive">
-                <thead>
-                <tr>
-                    <th style="width:30%"  scope="col"><i class="fas fa-clipboard-list fa-3x"></i></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="r, iter : ${desiredRoute}">
-                    <td colspan="1" align="center">
-                        <div th:if="${iter.first}">
-                            <p style="color:green;font-family:verdana;" th:text="${'Departure station: ' + r.station.name}">
-                            <p th:text="${'Time of departure: ' + r.departure}">
-                        </div>
-                        <div th:if="${iter.last}">
-                            <p style="color:green;font-family:verdana;"th:text="${'Arrival station: ' + r.station.name}"></p>
-                            <p th:text="${'Time of arrival: ' + r.arrival}"></p>
-                        </div>
-                        <div th:if="${(iter.last==false && iter.first==false)}">
-                            <p style="color:green;font-family:verdana;" th:text="${iter.count + ' station: ' + r.station.name}">
-                            <p th:text="${'Arrival to station: ' + r.arrival}">
-                            <p th:text="${'Departure from station: ' + r.departure}">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="opacity-80" align="center">
+            <div class="col-4 m-4">
+                <table class="table table-sm table-bordered align-middle mb-0 bg-white responsive">
+                    <thead>
+                    <tr>
+                        <th style="width:30%" scope="col"><i class="fas fa-clipboard-list fa-3x"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="r, iter : ${desiredRoute}">
+                        <td colspan="1" align="center">
+                            <div th:if="${iter.first}">
+                                <p style="color:green;font-family:verdana;"
+                                   th:text="#{schedule.departure} + ': ' + #{${r.station.name}}">
+                                <p th:text="#{schedule.time.from} + ': ' + ${{#temporals.format(r.departure, 'yyyy-MM-dd HH:mm')}}">
+                            </div>
+                            <div th:if="${iter.last}">
+                                <p style="color:green;font-family:verdana;"
+                                   th:text="#{schedule.arrival} + ': ' + #{${r.station.name}}"></p>
+                                <p th:text="#{schedule.time.to} + ': ' + ${{#temporals.format(r.arrival, 'yyyy-MM-dd HH:mm')}}">
+                            </div>
+                            <div th:if="${(iter.last==false && iter.first==false)}">
+                                <p style="color:green;font-family:verdana;"
+                                   th:text="${iter.count} + ' ' + #{schedule.station} + ': ' + #{${r.station.name}}">
+                                <p th:text="#{schedule.to} + ': ' +
+                                ${{#temporals.format(r.arrival, 'MM-dd HH:mm')}}">
+                                <p th:text="#{schedule.from} + ': ' +
+                               ${{#temporals.format(r.departure, 'MM-dd HH:mm')}}">
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 <!-- Footer Start -->

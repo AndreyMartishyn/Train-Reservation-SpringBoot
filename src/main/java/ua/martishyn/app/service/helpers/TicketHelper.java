@@ -7,9 +7,9 @@ import ua.martishyn.app.utils.enums.Type;
 
 public class TicketHelper {
 
-    public Ticket createTicketFromData(User user,
-                                       RoutePoint departureStation,
-                                       RoutePoint arrivalStation) {
+    public Ticket createTicketBase(User user,
+                                   RoutePoint departureStation,
+                                   RoutePoint arrivalStation) {
         Ticket ticket = new Ticket();
         ticket.setUser(user);
         ticket.setDeparture(departureStation);
@@ -27,7 +27,7 @@ public class TicketHelper {
         return ticketDetails;
     }
 
-    public PassengerDetails getPassengerDetails(BookingData bookingData) {
+    public PassengerDetails createPassengerDetails(BookingData bookingData) {
         PassengerDetails passengerDetails = new PassengerDetails();
         passengerDetails.setFirstName(bookingData.getFirstName());
         passengerDetails.setLastName(bookingData.getLastName());

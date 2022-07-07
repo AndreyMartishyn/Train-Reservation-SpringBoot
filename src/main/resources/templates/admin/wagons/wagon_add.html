@@ -14,7 +14,7 @@
             <form action="#" th:action="@{/admin/wagons/add}" th:object="${newWagon}" method="POST">
                 <br>
                 <div class="row d-flex justify-content-center">
-                    <span style="font-size: 60%; color:red;" th:if="${#fields.hasErrors('*')}">
+                    <span style="font-size: 60%; color:yellow;" th:if="${#fields.hasErrors('*')}">
                                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                                     </span>
                     <td class="row">

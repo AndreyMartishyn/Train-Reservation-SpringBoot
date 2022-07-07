@@ -59,7 +59,7 @@ public class BookingController {
                 model.addAttribute("suitableRoutes", suitableRoutes);
                 return "/common/search_result";
             }
-            attr.addFlashAttribute("noStations", true);
+            attr.addFlashAttribute("noRoutes", true);
         }
         return ControllerConstants.INDEX_PAGE_REDIRECT;
     }
@@ -93,7 +93,7 @@ public class BookingController {
         boolean isAvailablePlace = wagonService.checkForAvailablePlaceAndBook(bookingData.getWagonNum());
         if (!isAvailablePlace) {
             model.addAttribute("noPlace", true);
-            return "redirect:/booking/form";
+            return "/customer/booking_form.html";
         }
         ticketService.createTicketFromUserData(bookingData, currentUser.getUser());
         log.info("Ticket ordered successfully for Route #{}", bookingData.getRoute());

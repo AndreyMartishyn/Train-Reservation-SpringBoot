@@ -34,9 +34,9 @@
 
                     <td th:text="${ticket.passengerDetails.lastName}"></td>
 
-                    <td th:text="${ticket.departure.station.name} + ' - ' + ${ticket.arrival.station.name}"></td>
+                    <td th:text="#{${ticket.departure.station.name}} + ' - ' + #{${ticket.arrival.station.name}}"></td>
 
-                    <td th:text="${ticket.departure.departure} + ' - ' + ${ticket.arrival.arrival}"></td>
+                    <td th:text="${{#temporals.format(ticket.departure.departure, 'YYY-MM-dd HH:mm')}}+ ' - ' + ${{#temporals.format(ticket.arrival.arrival, 'YYY-MM-dd HH:mm')}}"></td>
 
                     <td th:text="${ticket.ticketDetails.wagonNum}"></td>
 
@@ -71,12 +71,15 @@
                             </form>
                         </div>
                         <div th:unless="${ticket.ticketDetails.status == T(ua.martishyn.app.utils.enums.TicketStatus).NOT_PAID}">
-                            <!-- TICKET download-->
+                            <!-- GET FORM FOR TICKET QR-->
+                            <form th:method="GET"
+                                  th:action="@{/tickets/show/qr/{id}(id=${ticket.id})}">
                             <button
                                     class="btn btn-outline-success"
                                     type="submit">
                                 <i class="fas fa-file-download fa-4x"></i>
                             </button>
+                            </form>
                         </div>
 
                     </td>

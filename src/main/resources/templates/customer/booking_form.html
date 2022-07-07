@@ -22,7 +22,7 @@
                                        th:text="#{booking.confirm.header}"></p>
                                     <form class="mx-1 mx-md-4" action="#" th:action="@{/booking/form/order}"
                                           th:object="${data}" method="POST">
-                                    <span style="font-size: 70%; color:white;" th:if="${#fields.hasErrors('*')}">
+                                    <span style="font-size: 70%; color:yellow;" th:if="${#fields.hasErrors('*')}">
                                         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                                     </span>
 

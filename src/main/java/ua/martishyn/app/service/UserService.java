@@ -96,6 +96,4 @@ public class UserService {
     public boolean checkIfUserExist(String email) {
         return userRepository.findUserByEmail(email).isPresent();
     }
-
-
 }
