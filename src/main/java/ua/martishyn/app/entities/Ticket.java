@@ -3,7 +3,8 @@ package ua.martishyn.app.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -22,15 +23,17 @@ public class Ticket implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne()
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "departure_id", nullable = false)
     private RoutePoint departure;
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "arrival_id", nullable = false)
     private RoutePoint arrival;
 
@@ -39,7 +42,7 @@ public class Ticket implements Serializable {
     private PassengerDetails passengerDetails;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn( name = "ticket_details", nullable = false)
+    @JoinColumn(name = "ticket_details", nullable = false)
     private TicketDetails ticketDetails;
 
     @CreatedDate

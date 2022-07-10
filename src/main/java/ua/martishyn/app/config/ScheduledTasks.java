@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ScheduledTasks {
     private final TicketService ticketService;
 
-    @Scheduled(initialDelay = 1,fixedDelay = 5,timeUnit = TimeUnit.MINUTES)
+    @Scheduled(initialDelay = 1,fixedDelay = 2,timeUnit = TimeUnit.MINUTES)
     public void deleteNotPayedExpiredTicket() {
         log.info("Task started at:{}", LocalDateTime.now());
         List<Ticket> allTicketsFromBase = ticketService.getAllTickets();

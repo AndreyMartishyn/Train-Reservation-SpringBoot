@@ -15,12 +15,12 @@ public class BookingData {
     private Integer route;
 
     @NotBlank(message = "{user.lastname.notblank}")
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{4,16}$",
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{2,16}$",
             message = "{user.firstname.pattern}")
     private String firstName;
 
     @NotBlank(message = "{user.lastname.notblank}")
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{4,16}$",
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{2,16}$",
             message = "{user.lastname.pattern}")
     private String lastName;
 

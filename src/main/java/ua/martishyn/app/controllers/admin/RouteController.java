@@ -39,6 +39,7 @@ public class RouteController {
         List<RouteDTO> routes = routeService
                 .getAllRoutesDTO();
         if (routes.isEmpty()) {
+            log.info("No routes found");
             model.addAttribute("noRoutes", true);
         } else {
             model.addAttribute("routeList", routes);
@@ -51,7 +52,7 @@ public class RouteController {
     public String showFoundRouteSchedule(@RequestParam("routeId") Integer routeId,
                                          @RequestParam("firstStation") Integer stationFromId,
                                          @RequestParam("lastStation") Integer stationToId,
-                                         Model model){
+                                         Model model) {
         model.addAttribute("desiredRoute", routeService.collectRoutePointsForView(routeId, stationFromId, stationToId));
         return "/common/show_route_schedule";
     }
@@ -59,7 +60,7 @@ public class RouteController {
     @GetMapping("/admin/routes/add-new-route")
     public String showAddNewRouteForm(@ModelAttribute("newRoute") RouteDTO routeDTO,
                                       Model model) {
-        model.addAttribute("trains",trainService.getAllTrains());
+        model.addAttribute("trains", trainService.getAllTrains());
         return ControllerConstants.ROUTE_ADD_PAGE;
     }
 
@@ -67,6 +68,7 @@ public class RouteController {
     public String addNewRoute(@ModelAttribute("newRoute") @Valid RouteDTO routeDTO,
                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            log.error("Problems with adding route with id {}", routeDTO.getId());
             return ControllerConstants.ROUTE_ADD_PAGE;
         }
         routeService.addRouteWithoutStations(routeDTO);
@@ -102,6 +104,7 @@ public class RouteController {
     public String addRoutePoint(@ModelAttribute("newPoint") @Valid RoutePointDTO routePointDTO,
                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            log.error("Problems with adding route-point with id {}", routePointDTO.getId());
             return ControllerConstants.ROUTE_POINT_ADD_PAGE;
         }
         routeService.addOrUpdateRoutePointToExistingRoute(routePointDTO);
@@ -112,6 +115,7 @@ public class RouteController {
     public String updateRoutePoint(@ModelAttribute("routePoint") @Valid RoutePointDTO routePointDTO,
                                    BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            log.error("Problems with editing route-point with id {}", routePointDTO.getId());
             return ControllerConstants.ROUTE_POINT_EDIT_PAGE;
         }
         routeService.addOrUpdateRoutePointToExistingRoute(routePointDTO);
@@ -123,6 +127,4 @@ public class RouteController {
         routeService.deleteRoutePoint(routePointId);
         return ControllerConstants.ROUTE_REDIRECT;
     }
-
-
 }

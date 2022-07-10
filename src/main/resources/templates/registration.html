@@ -31,7 +31,7 @@
                                             <div class="form-outline flex-fill mb-0">
                                                 <input type="text" id="form3Example1c" class="form-control"
                                                        th:field="*{firstName}"
-                                                       th:errorclass="is-invalid"/>
+                                                       th:errorclass="is-invalid" required/>
                                                 <label class="form-label" for="form3Example1c"
                                                        th:text="#{label.register.first}"></label>
                                             </div>
@@ -42,8 +42,8 @@
                                             <div class="form-outline flex-fill mb-0">
                                                 <input type="text" id="form3Example2c" class="form-control"
                                                        th:field="*{lastName}"
-                                                       th:errorclass="is-invalid">
-                                                <label class="form-label" for="form3Example1c"
+                                                       th:errorclass="is-invalid" required>
+                                                <label class="form-label" for="form3Example2c"
                                                        th:text="#{label.register.last}"></label>
                                             </div>
                                         </div>
@@ -52,7 +52,7 @@
                                             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <input type="email" id="form3Example3c" class="form-control"
-                                                       th:field="*{email}" th:errorclass="is-invalid">
+                                                       th:field="*{email}" th:errorclass="is-invalid" required>
                                                 <label class="form-label" for="form3Example3c"
                                                        th:text="#{label.login.email}"></label>
                                             </div>
@@ -63,7 +63,7 @@
                                             <div class="form-outline flex-fill mb-0">
                                                 <input type="password" id="form3Example4c" class="form-control"
                                                        th:field="*{password}"
-                                                       th:errorclass="is-invalid">
+                                                       th:errorclass="is-invalid" required>
                                                 <label class="form-label" for="form3Example4c"
                                                        th:text="#{label.login.password}"></label>
                                             </div>
@@ -74,7 +74,7 @@
                                             <div class="form-outline flex-fill mb-0">
                                                 <input type="password" id="form3Example4cd" class="form-control"
                                                        th:field="*{verifyPassword}"
-                                                       th:errorclass="is-invalid">
+                                                       th:errorclass="is-invalid" required>
                                                 <label class="form-label" for="form3Example4cd"
                                                        th:text="#{label.register.repeat.pass}"></label>
                                             </div>

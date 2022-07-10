@@ -50,5 +50,4 @@ class ScheduledTasksTest {
         when(ticketService.getAllTickets()).thenReturn(testList);
         scheduledTasks.deleteNotPayedExpiredTicket();
     }
-
 }

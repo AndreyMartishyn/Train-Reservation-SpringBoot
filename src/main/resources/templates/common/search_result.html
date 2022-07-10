@@ -32,10 +32,9 @@
                             </button>
                         </form>
                     </td>
+                    <td th:text="#{${matchingRoute.routeDTO.firstStation.station.name}} + ' - ' + #{${matchingRoute.routeDTO.lastStation.station.name}}"></td>
 
-                    <td th:text="${matchingRoute.routeDTO.firstStation.station.name} + ' - ' + ${matchingRoute.routeDTO.lastStation.station.name}"></td>
-
-                    <td th:text="${matchingRoute.routeDTO.firstStation.departure} + ' - ' + ${matchingRoute.routeDTO.lastStation.arrival}"></td>
+                    <td th:text="${{#temporals.format(matchingRoute.routeDTO.firstStation.departure, 'yyyy-MM-dd HH:mm')}} + ' - ' + ${{#temporals.format(matchingRoute.routeDTO.lastStation.arrival, 'yyyy-MM-dd HH:mm')}}"></td>
 
                     <td th:text="${matchingRoute.roadTime}"></td>
                     <td styles="text-align:center">
@@ -71,7 +70,7 @@
                                                      departure=${matchingRoute.routeDTO.firstStation.departure},
                                                      arrival=${matchingRoute.routeDTO.lastStation.arrival},
                                                      duration=${matchingRoute.roadTime},
-                                                     type=${T(ua.martishyn.app.utils.Type).SECOND}
+                                                     type=SECOND,
                                                      price=${matchingRoute.seatsDetails.secondClassTotalPrice}
                                                      )}"
                                class="btn btn-outline-success"> <i class="fas fa-check"></i></i>

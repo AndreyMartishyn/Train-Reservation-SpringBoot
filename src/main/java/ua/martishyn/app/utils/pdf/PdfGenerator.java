@@ -24,6 +24,9 @@ public class PdfGenerator {
             document.open();
             document.add(new Paragraph("Train ticket"));
             Image image = Image.getInstance("src/main/resources/static/images/local_railway.png");
+            float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
+                    - document.rightMargin() - 0) / image.getWidth()) * 100;
+            image.scalePercent(scaler);
             document.add(image);
 
             //specify column widths

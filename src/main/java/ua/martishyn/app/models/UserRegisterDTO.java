@@ -20,12 +20,12 @@ message = "{user.password.mismatch}")
 public class UserRegisterDTO {
 
     @NotBlank(message = "{user.lastname.notblank}")
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{1,16}$",
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{2,16}$",
             message = "{user.firstname.pattern}")
     private String firstName;
 
     @NotBlank(message = "{user.lastname.notblank}")
-    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{1,16}$",
+    @Pattern(regexp = "^[A-Za-z\\u0400-\\u04ff]{2,16}$",
             message = "{user.lastname.pattern}")
     private String lastName;
 

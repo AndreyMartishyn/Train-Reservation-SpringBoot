@@ -22,7 +22,7 @@ public class RoutePoint implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "route_id")
+    @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
     @OneToOne

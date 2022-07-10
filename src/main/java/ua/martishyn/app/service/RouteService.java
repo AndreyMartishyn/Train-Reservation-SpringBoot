@@ -69,7 +69,7 @@ public class RouteService {
      * @param routeId          routeId which contains all route-points
      * @param routePointFromId from station id(route-point)
      * @param routePointToId   to station id (route-point)
-     * @return List<RoutePointDTO> of collected routes
+     * @return List<RoutePointDTO> of collected route-points
      */
 
     @Transactional(readOnly = true)

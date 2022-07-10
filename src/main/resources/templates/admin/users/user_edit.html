@@ -41,7 +41,7 @@
                                 </div>
 
                                 <div class="form-helper" th:text="#{label.user.role}"></div>
-                                <select class="form-select" th:field="*{role}">
+                                <select class="form-select" th:field="*{role}" required>
                                     <option th:each="role : ${T(ua.martishyn.app.utils.enums.Role).values()}"
                                             th:value="${role}"
                                             th:text="#{${role}}">

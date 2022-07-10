@@ -34,7 +34,7 @@
                                         <select class="form-select" th:field="*{type}" required>
                                             <option th:each="type : ${T(ua.martishyn.app.utils.enums.Type).values()}"
                                                     th:value="${type}"
-                                                    th:text="${type}">
+                                                    th:text="#{${type}}">
                                             </option>
                                         </select>
                                     </div>

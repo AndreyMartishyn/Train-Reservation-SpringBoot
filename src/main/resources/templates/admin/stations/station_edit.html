@@ -27,12 +27,12 @@
                                     <div class="form-helper" th:text="#{label.station.name}"></div>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" th:field="*{name}"
-                                               th:errorclass="is-invalid">
+                                               th:errorclass="is-invalid" required>
                                     </div>
                                     <div class="form-helper" th:text="#{label.station.code}"></div>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" th:field="*{code}"
-                                               th:errorclass="is-invalid">
+                                               th:errorclass="is-invalid" required>
                                     </div>
                                     <div align="center">
                                         <div class="col-4">

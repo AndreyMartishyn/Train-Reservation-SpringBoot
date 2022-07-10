@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                 <tr th:if="${noOrders}">
-                    <td colspan="5" th th:text="#{admin.no.orders.found}"></td>
+                    <td colspan="6" th th:text="#{admin.no.orders.found}"></td>
                 </tr>
                 <tr th:each="ticket : ${ordersList}">
                     <td style="text-align:center" th:text="${ticket.departure.route.train.id}"/>

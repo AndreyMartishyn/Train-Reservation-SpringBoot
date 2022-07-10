@@ -36,7 +36,7 @@ public class User implements Serializable {
     @Transient
     private String passwordConfirm;
 
-    @Column(name = "email" , nullable = false, unique = true, length = 255)
+    @Column(name = "email" , nullable = false, unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
